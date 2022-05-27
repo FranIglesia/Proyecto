@@ -16,7 +16,7 @@ class Controlador{
       require_once("../app/vistas/".$vista.".php");
     } else {
       die("La vista no existe...");
-    } 
+    }
     
   }
 }

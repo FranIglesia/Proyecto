@@ -5,9 +5,9 @@
 class MySQLdb{
   private $host = "localhost";
   private $usuario = "root";
-  private $clave = ""; //XAMPP la clave es vacía, y en MAMP es "root"
-  private $db = "ecommerce5";
-  private $puerto = ""; //MAMP en Windows necesitamos el puerto
+  private $clave = ""; //XAMPP la clave es vacía
+  private $db = "proyecto";
+  private $puerto = ""; 
   private $conn;
   
   function __construct()
@@ -32,8 +32,22 @@ class MySQLdb{
     } else {
       //print "El conjunto de caracteres es: ".mysqli_character_set_name($this->conn)."<br>";
     }
-    
-    
+  } //fin constructora
+
+  //Query regresa un solo registro 
+  function query($sql){
+    $data = array();
+    $r = mysqli_query($this->conn, $sql);
+    if(mysqli_num_rows($r)>0){
+      $data = mysqli_fetch_assoc($r);
+    }
+    return $data;
+  }
+
+  //Query regresa un valor booleano
+  function queryNoSelect($sql){
+    $r = mysqli_query($this->conn, $sql);
+    return $r;
   }
 }
 ?>
