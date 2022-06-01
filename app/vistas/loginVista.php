@@ -18,5 +18,6 @@
   </form>
 </div><!--card-->
   <a href="<?php print RUTA; ?>login/registro/" >Darse de alta en el sistema</a><br>
-  <a href="<?php print RUTA; ?>login/olvido/">¿Olvidaste tu clave de acceso?</a>
+  <a href="<?php print RUTA; ?>login/olvido/">¿Olvidaste tu clave de acceso?</a><br>
+  <a href="<?php print RUTA; ?>login/cambiaclave/1">¿Quiere cambiar la clave?</a>
 <?php include_once("piepagina.php"); ?>
