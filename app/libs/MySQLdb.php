@@ -34,7 +34,7 @@ class MySQLdb{
     }
   } //fin constructora
 
-  //Query regresa un solo registro 
+  //Query regresa un solo registro en un arreglo asociado
   function query($sql){
     $data = array();
     $r = mysqli_query($this->conn, $sql);

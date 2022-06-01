@@ -31,11 +31,44 @@ class LoginModelo{
     return $r;
   }
 
+  function cambiarClaveAcceso($id, $clave){
+    $r = false;
+    $clave = hash_hmac("sha512", $clave, "mimamamemima");
+    $sql = "UPDATE usuarios SET ";
+    $sql.= "clave='".$clave."' ";
+    $sql.= "WHERE id=".$id;
+    $r = $this->db->queryNoSelect($sql);
+    return $r;
+  }
+
   function validaCorreo($email){
     $sql = "SELECT * FROM usuarios WHERE email='".$email."'";
     $data = $this->db->query($sql);
     return (count($data)==0)?true:false;
   }
 
+  function getUsuarioCorreo($email){
+    $sql = "SELECT * FROM usuarios WHERE email='".$email."'";
+    $data = $this->db->query($sql);
+    return $data;
+  }
+//funcion enviar correo
+  function enviarCorreo($email){
+    $data = $this->getUsuarioCorreo($email);
+    //
+    $id = $data["id"];
+    $nombre = $data["nombre"]." ".$data["apellidoPaterno"]." ".$data["apellidoMaterno"];
+    $msg = $nombre.", entra a la siguiente liga para cambiar tu clave de acceso a la tienda ...<br>";
+    $msg.= "<a href='".RUTA."/login/cambiaclave/".$id."'>Cambia tu clave de acceso</a>";
+
+    $headers = "MIME-Version: 1.0\r\n"; 
+    $headers .= "Content-type:text/html; charset=UTF-8\r\n"; 
+    $headers .= "From: eCommerce\r\n"; 
+    $headers .= "Repaly-to: igly@hotmail.com\r\n";
+
+    $asunto = "Cambiar clave de acceso";
+
+    return @mail($email,$asunto, $msg, $headers);
+  }
 }
 ?>

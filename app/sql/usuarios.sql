@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `codpos` varchar(10)  NOT NULL,
   `pais` varchar(100)  NOT NULL,
   `clave` varchar(200)  NOT NULL
-) ENGINE=InnoDB DEFAULT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Índices para tablas volcadas

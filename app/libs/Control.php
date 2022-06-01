@@ -4,7 +4,7 @@
  el primer elemento es el objeto o controlador
  el segundo elemento es el metodo o accion
  el tercero y posteriores son los parametros
- */ 
+ */
 class Control{
   protected $controlador = "Login";
   protected $metodo = "caratula";
