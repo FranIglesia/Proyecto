@@ -16,7 +16,7 @@ class Login extends Controlador{
       "menu" => false
     ];
     $this->vista("loginVista",$datos);
-  }//funcion olvido de contraseña
+  }
 
   function olvido(){
     $errores = array();
@@ -167,7 +167,7 @@ class Login extends Controlador{
           "errores" => [],
           "data" => [],
           "subtitulo" => "Bienvenid@ a nuestra tienda",
-          "texto" => "En nombre de nuestra empresa te damos la más sincera bienvenida a nuestra tienda virtual, en la que esperamos encontrarán todo lo que necesitas.<br><br>El objetivo principal de este canal de comunicación es plasmar los valores que nos respaldan: el compromiso social, la máxima calidad y la voluntad de servicio, así como nuestro interés por todas aquellas ventajas que nos ofrece la tecnología. Todo ello tiene una presencia destacada en esta página web y en nuestras propias decisiones.<br><br>En 2022 comenzó la idea  de crear esta tienda.<br><br>Sólo nos queda desearles un agradable experiencia en nuestra tienda.<br><br>Atentamente: Francisco José Iglesia Martín, CEO",
+          "texto" => "En nombre de nuestra empresa te damos la más sincera bienvenida a nuestra tienda virtual, en la que esperamos encontrarán todo lo que necesitas.<br><br>El objetivo principal de este canal de comunicación es plasmar los valores que nos respaldan: el compromiso social, la máxima calidad y la voluntad de servicio, así como nuestro interés por todas aquellas ventajas que nos ofrece la tecnología. Todo ello tiene una presencia destacada en esta página web y en nuestras propias decisiones.<br><br>En 2022 comenzó una idea de crear esta tienda.<br><br>Sólo nos queda desearles un agradable experiencia en nuestra tienda.<br><br>Atentamente: Francisco José Iglesia Martin, CEO",
           "color" => "alert-success",
           "url" => "menu",
           "colorBoton" => "btn-success",
@@ -205,7 +205,7 @@ class Login extends Controlador{
       ];
       $this->vista("loginRegistroVista",$datos);
     } 
-  }//funcion cambiar clave
+  }
   function cambiaclave($data){
     $errores = array();
     if($_SERVER['REQUEST_METHOD']=="POST"){
@@ -270,6 +270,34 @@ class Login extends Controlador{
       "data" => $data
       ];
       $this->vista("loginCambiaClave",$datos);
+    }
+  }
+//creo funcion verifica y sino hay errores ya se puede acceder a la tienda virtual
+  function verifica(){
+    $errores = array();
+    if($_SERVER["REQUEST_METHOD"]=="POST"){
+      $usuario = isset($_POST["usuario"])?$_POST["usuario"]:"";
+      $clave = isset($_POST["clave"])?$_POST["clave"]:"";
+      $recordar = isset($_POST["recordar"])?"on":"off";
+      $errores = $this->modelo->verificar($usuario, $clave);
+      //
+      $data = [
+        "usuario" => $usuario,
+        "clave" => $clave,
+        "recordar" => $recordar
+      ];
+      //Validacion
+      if (empty($errores)) {
+        print "Bienvenid@...";
+      } else {
+        $datos = [
+          "titulo" => "Login",
+          "menu" => false,
+          "errores" => $errores,
+          "data" => $data
+        ];
+        $this->vista("loginVista",$datos);
+      }
     }
   }
 }
