@@ -5,4 +5,4 @@ print "<h4>".$datos["texto"]."</h4>";
 print "</div>";
 print "<a href='".RUTA.$datos["url"]."' class='btn ".$datos["colorBoton"]."'/>";
 print $datos["textoBoton"]."</a>";
-include_once("piepagina.php"); ?>
+include_once("piepagina.php"); ?> 

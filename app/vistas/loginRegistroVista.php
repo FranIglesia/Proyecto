@@ -68,4 +68,4 @@
       <a href="<?php print RUTA; ?>login/" class="btn btn-info">Regresar</a>
     </div>
 </form>
-<?php include_once("piepagina.php"); ?>
+<?php include_once("piepagina.php"); ?> 

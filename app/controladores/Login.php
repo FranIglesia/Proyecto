@@ -288,7 +288,7 @@ class Login extends Controlador{
       ];
       //Validacion
       if (empty($errores)) {
-        print "Bienvenid@...";
+        header("location:".RUTA."tienda");
       } else {
         $datos = [
           "titulo" => "Login",

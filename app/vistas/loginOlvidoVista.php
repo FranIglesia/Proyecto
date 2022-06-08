@@ -8,8 +8,9 @@
     </div>
     <div class="form-group text-left">
       <input type="submit" value="Enviar" class="btn btn-success">
+      <a href="<?php print RUTA; ?>" class= "btn btn-info">Regresar</a>
     </div>
   </form>
   <p>Se te enviará un correo, favor de verificar tu bandeja de spam.</p>
 </div><!--card-->
-<?php include_once("piepagina.php"); ?>
+<?php include_once("piepagina.php"); ?> 
