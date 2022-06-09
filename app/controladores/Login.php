@@ -9,11 +9,24 @@ class Login extends Controlador{
   {
     $this->modelo = $this->modelo("LoginModelo");
   }
-
+// CREAMOS SESION
   function caratula(){
+    if(isset($_COOKIE["datos"])){
+      $datos_array = explode("|",$_COOKIE["datos"]);
+      $usuario = $datos_array[0];
+      $clave = $datos_array[1];
+      $data = [
+        "usuario" => $usuario,
+        "clave" => $clave,
+        "recordar" => "on"
+      ];
+    } else {
+      $data = [];
+    }
     $datos = [
       "titulo" => "Login",
-      "menu" => false
+      "menu" => false,
+      "data" => $data
     ];
     $this->vista("loginVista",$datos);
   }
@@ -167,7 +180,7 @@ class Login extends Controlador{
           "errores" => [],
           "data" => [],
           "subtitulo" => "Bienvenid@ a nuestra tienda",
-          "texto" => "En nombre de nuestra empresa te damos la más sincera bienvenida a nuestra tienda virtual, en la que esperamos encontrarán todo lo que necesitas.<br><br>El objetivo principal de este canal de comunicación es plasmar los valores que nos respaldan: el compromiso social, la máxima calidad y la voluntad de servicio, así como nuestro interés por todas aquellas ventajas que nos ofrece la tecnología. Todo ello tiene una presencia destacada en esta página web y en nuestras propias decisiones.<br><br>En 2022 comenzó una idea de crear esta tienda.<br><br>Sólo nos queda desearles un agradable experiencia en nuestra tienda.<br><br>Atentamente: Francisco José Iglesia Martin, CEO",
+          "texto" => "En nombre de nuestra empresa te damos la más sincera bienvenida a nuestra tienda virtual, en la que esperamos encontrarán todo lo que necesitas.<br><br>El objetivo principal de este canal de comunicación es plasmar los valores que nos respaldan: el compromiso social, la máxima calidad y la voluntad de servicio, así como nuestro interés por todas aquellas ventajas que nos ofrece la tecnología. Todo ello tiene una presencia destacada en esta página web y en nuestras propias decisiones.<br><br>En 2022 comenzó la idea  de crear esta tienda.<br><br>Sólo nos queda desearles un agradable experiencia en nuestra tienda.<br><br>Atentamente: Francisco José Iglesia Martín, CEO",
           "color" => "alert-success",
           "url" => "menu",
           "colorBoton" => "btn-success",
@@ -272,7 +285,7 @@ class Login extends Controlador{
       $this->vista("loginCambiaClave",$datos);
     }
   }
-//creo funcion verifica y sino hay errores ya se puede acceder a la tienda virtual
+
   function verifica(){
     $errores = array();
     if($_SERVER["REQUEST_METHOD"]=="POST"){
@@ -280,6 +293,15 @@ class Login extends Controlador{
       $clave = isset($_POST["clave"])?$_POST["clave"]:"";
       $recordar = isset($_POST["recordar"])?"on":"off";
       $errores = $this->modelo->verificar($usuario, $clave);
+
+      //recuerdame
+      $valor = $usuario."|".$clave;
+      if($recordar=="on"){
+        $fecha = time()+(60*60*24*7);
+      } else {
+        $fecha = time() - 1;
+      }
+      setcookie("datos",$valor,$fecha,RUTA);
       //
       $data = [
         "usuario" => $usuario,
@@ -288,6 +310,11 @@ class Login extends Controlador{
       ];
       //Validacion
       if (empty($errores)) {
+        //Iniciamos sesión
+        $data = $this->modelo->getUsuarioCorreo($usuario);
+        $sesion = new Sesion();
+        $sesion->iniciarLogin($data);
+        //
         header("location:".RUTA."tienda");
       } else {
         $datos = [
