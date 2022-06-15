@@ -1,6 +1,6 @@
 <?php
 /**
- * Controlador  usuario administrativo
+ * Controlador administrativo
  */
 class Admon extends Controlador{
   private $modelo;
@@ -21,13 +21,53 @@ class Admon extends Controlador{
 
   public function verifica()
   {
-    $datos = [
-      "titulo" => "Administrativo Inicio",
+    //Inicio array
+    $errores = array();
+    $data = array();
+
+    //Recibimos los datos de la vista
+    if ($_SERVER['REQUEST_METHOD']=="POST") {
+      
+      //Limpiamos de datos
+      $usuario = isset($_POST['usuario'])?$_POST['usuario']:"";
+      $clave = isset($_POST['clave'])?$_POST['clave']:"";
+      
+      //Validaciones
+      if(empty($usuario)){
+        array_push($errores,"El usuario es requerdio.");
+      }
+      if(empty($clave)){
+        array_push($errores,"La clave del usuario es requerdia.");
+      }
+      
+      //Arreglo de data
+      $data = [
+        "usuario" => $usuario,
+        "clave" => $clave
+      ];
+      
+      //Verificar errores
+      if (empty($errores)) {
+
+        //Ejecutar query
+        $errores = $this->modelo->verificarClave($data);
+        
+        //No hay errores
+        if (empty($errores)) {
+          header("location:".RUTA."admonInicio");
+        } 
+      } 
+    } 
+
+    //enviamos errores a la vista
+   $datos = [
+      "titulo" => "Administrativo",
       "menu" => false,
       "admon" => true,
+      "errores" => $errores,
       "data" => []
     ];
-    $this->vista("admonInicioVista",$datos);
+    $this->vista("admonVista",$datos);
   }
 }
 
