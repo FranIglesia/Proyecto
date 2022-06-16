@@ -21,7 +21,7 @@ class Admon extends Controlador{
 
   public function verifica()
   {
-    //Inicio array
+  
     $errores = array();
     $data = array();
 
@@ -54,6 +54,11 @@ class Admon extends Controlador{
         
         //No hay errores
         if (empty($errores)) {
+          //Creamos la sesion
+          $sesion = new Sesion();
+          $sesion->iniciarLogin($data);
+          
+          //Abrimos admonInicio
           header("location:".RUTA."admonInicio");
         } 
       } 

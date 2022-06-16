@@ -1,6 +1,6 @@
 <?php
 /**
- * Controlador admonInicio
+ * Controlador Login
  */
 class AdmonInicio extends Controlador{
   private $modelo;
@@ -11,6 +11,10 @@ class AdmonInicio extends Controlador{
   }
 
   function caratula(){
+    //Creamos sesion 
+    $sesion = new Sesion();
+
+    if($sesion->getLogin()){
       $datos = [
         "titulo" => "Administrativo | inicio",
         "menu" => false,
@@ -18,6 +22,9 @@ class AdmonInicio extends Controlador{
         "data" => []
       ];
       $this->vista("AdmonInicioVista",$datos);
+    } else {
+      header("location:".RUTA."admon");
+    }
   }
 
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * Controlador usuarioAdmon.
+ * Controlador usuarios admon. 
  */
 class AdmonUsuarios extends Controlador{
   private $modelo;
@@ -12,13 +12,20 @@ class AdmonUsuarios extends Controlador{
 
   public function caratula()
   {
-    $datos = [
-      "titulo" => "Administrativo Usuarios",
-      "menu" => false,
-      "admon" => true,
-      "data" => []
-    ];
-    $this->vista("admonUsuariosCaratulaVista",$datos);
+    //Creamos sesion
+    $sesion = new Sesion();
+
+    if($sesion->getLogin()){
+      $datos = [
+        "titulo" => "Administrativo Usuarios",
+        "menu" => false,
+        "admon" => true,
+        "data" => []
+      ];
+      $this->vista("admonUsuariosCaratulaVista",$datos);
+    } else {
+      header("location:".RUTA."admon");
+    }
   }
 
   public function alta()
