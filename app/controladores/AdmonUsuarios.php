@@ -1,6 +1,6 @@
 <?php
 /**
- * Controlador usuarios admon. 
+ * Controlador usuarios admon.
  */
 class AdmonUsuarios extends Controlador{
   private $modelo;
@@ -16,11 +16,15 @@ class AdmonUsuarios extends Controlador{
     $sesion = new Sesion();
 
     if($sesion->getLogin()){
+
+      //Leemos los datos de la tabla
+      $data = $this->modelo->getUsuarios();
+
       $datos = [
         "titulo" => "Administrativo Usuarios",
         "menu" => false,
         "admon" => true,
-        "data" => []
+        "data" => $data
       ];
       $this->vista("admonUsuariosCaratulaVista",$datos);
     } else {
@@ -105,9 +109,48 @@ class AdmonUsuarios extends Controlador{
    print "Usuarios admon baja";
   }
 
-  public function cambio()
+  public function cambio($id)
   {
-    print "Usuarios admon cambio";
+    if ($_SERVER['REQUEST_METHOD']=="POST") {
+      $errores = array();
+      $data = array();
+      $usuario = isset($_POST['usuario'])?$_POST['usuario']:"";
+      $clave1 = isset($_POST['clave1'])?$_POST['clave1']:"";
+      $clave2 = isset($_POST['clave2'])?$_POST['clave2']:"";
+      $nombre = isset($_POST['nombre'])?$_POST['nombre']:"";
+      //Validacion
+      if(empty($usuario)){
+        array_push($errores,"El usuario es requerido.");
+      }
+      if(empty($clave1)){
+        array_push($errores,"La clave de acceso es requerida.");
+      }
+      if(empty($clave2)){
+        array_push($errores,"La verificación de la clave de acceso es requerida.");
+      }
+      if($clave1!=$clave2){
+        array_push($errores,"Las claves no coinciden, favor de verificar.");
+      }
+      if(empty($nombre)){
+        array_push($errores,"El nombre del usuario es requerido.");
+      }
+      //Crear arreglo de datos
+      $data = [
+          "nombre" => $nombre,
+          "clave1" => $clave1,
+          "clave2" => $clave2,
+          "usuario" => $usuario
+        ];
+    } else {
+      $data = $this->modelo->getUsuarioId($id);
+      $datos = [
+        "titulo" => "Administrativo Usuarios Modifica",
+        "menu" => false,
+        "admon" => true,
+        "data" => $data
+      ];
+      $this->vista("admonUsuariosModificaVista",$datos);
+    }
   }
 }
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * Modelo UsuariosAdmon.
+ * Modelo Usuarios Admon.
  */
 class AdmonUsuariosModelo{
   private $db;
@@ -23,6 +23,18 @@ class AdmonUsuariosModelo{
     $sql.= "'', "; //fecha del modificacion
     $sql.= "(NOW()))"; //fecha del ultimo login
     return $this->db->queryNoSelect($sql);
+  }
+
+  public function getUsuarios(){
+    $sql = "SELECT * FROM admon WHERE baja=0";
+    $data = $this->db->querySelect($sql);
+    return $data;
+  }
+
+  public function getUsuarioId($id){
+    $sql = "SELECT * FROM admon WHERE id=".$id;
+    $data = $this->db->query($sql);
+    return $data;
   }
 }
 

@@ -32,15 +32,26 @@ class MySQLdb{
     } else {
       //print "El conjunto de caracteres es: ".mysqli_character_set_name($this->conn)."<br>";
     }
-  } 
+  } //fin constructora
 
-//datos
+  //Query regresa un solo registro en un array asociado
   function query($sql){
     $data = array();
     $r = mysqli_query($this->conn, $sql);
     if($r){
       if(mysqli_num_rows($r)>0){
         $data = mysqli_fetch_assoc($r);
+      }
+    }
+    return $data;
+  }
+
+  function querySelect($sql){
+    $data = array();
+    $r = mysqli_query($this->conn, $sql);
+    if($r){
+      while($row = mysqli_fetch_assoc($r)){
+        array_push($data, $row);
       }
     }
     return $data;
