@@ -15,11 +15,11 @@ class AdmonModelo{
     //Declaramos el arreglo
     $errores = array();
 
-    //Encriptamos
+    //Encriptar
     $clave = hash_hmac("sha512", $data['clave'], LLAVE);
 
     //Enviamos el query
-    $sql = "SELECT id, clave FROM admon WHERE correo='".$data['usuario']."'";
+    $sql = "SELECT id, clave, status, baja FROM admon WHERE correo='".$data['usuario']."'";
     $data = $this->db->query($sql);
 
     //Verificación
@@ -27,7 +27,11 @@ class AdmonModelo{
       array_push($errores, "No existe el usuario.");
     } else if($clave!=$data['clave']){
       array_push($errores, "La clave de acceso no es correcta.");
-    } else if(count($data)>2){
+    } else if($data['status']==0){
+      array_push($errores, "El usuario está desactivado.");
+    } else if($data['baja']==1){
+      array_push($errores, "El usuario está dado de baja.");
+    } else if(count($data)>4){
       array_push($errores, "El correo electrónico esta duplicado.");
     } else {
       $sql = "UPDATE admon SET login_dt=NOW() WHERE id=".$data['id'];
@@ -36,7 +40,7 @@ class AdmonModelo{
       }
     }
     
-    //Regresamos los errores
+    //Regresamos los errores que tenga
     return $errores;
   }
 }

@@ -42,6 +42,15 @@ class AdmonUsuariosModelo{
     $data = $this->db->query($sql);
     return $data;
   }
+//se crea funcion bajaLogica
+  public function bajaLogica($id){
+    $errores = array();
+    $sql = "UPDATE admon SET baja=1, baja_dt=(NOW()) WHERE id=".$id;
+    if(!$this->db->queryNoSelect($sql)){
+      array_push($errores,"Error al modificar el registro para baja.");
+    }
+    return $errores;
+  }
 
   public function modificaUsuario($data){
     $errores = array();

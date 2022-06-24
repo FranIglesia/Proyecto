@@ -19,8 +19,8 @@
       print "<td class='text-left'>".$datos["data"][$i]["nombre"]."</td>";
       print "<td class='text-left'>".$datos["data"][$i]["correo"]."</td>";
       print "<td><a href='".RUTA."admonUsuarios/cambio/".$datos["data"][$i]["id"]."' class='btn btn-info'>Modificar</a></td>";
-      print "<td><a href='' class='btn btn-danger'>Borrar</a></td>";
-      print "</tr>";
+      print "<td><a href='".RUTA."admonUsuarios/baja/".$datos["data"][$i]["id"]."' class='btn btn-danger'>Borrar</a></td>";
+      print "</tr>";//Ruta
     }
     ?>
   </tbody>
