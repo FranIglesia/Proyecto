@@ -1,6 +1,6 @@
 <?php
 /**
- * Controlador usuarios admon.
+ * Controlador usuarios adminstrativo
  */
 class AdmonUsuarios extends Controlador{
   private $modelo;
@@ -109,48 +109,72 @@ class AdmonUsuarios extends Controlador{
    print "Usuarios admon baja";
   }
 
-  public function cambio($id)
+  public function cambio($id="")
   {
+    //Definiendo arreglos
+    $errores = array();
+    $data = array();
+
+    //Recibiendo de la vista
     if ($_SERVER['REQUEST_METHOD']=="POST") {
-      $errores = array();
-      $data = array();
-      $usuario = isset($_POST['usuario'])?$_POST['usuario']:"";
+      
+      //Limpiando variables
+      $id = isset($_POST['id'])?$_POST['id']:"";
+      $correo = isset($_POST['correo'])?$_POST['correo']:"";
       $clave1 = isset($_POST['clave1'])?$_POST['clave1']:"";
       $clave2 = isset($_POST['clave2'])?$_POST['clave2']:"";
       $nombre = isset($_POST['nombre'])?$_POST['nombre']:"";
+      $status = isset($_POST['status'])?$_POST['status']:"";
+      
       //Validacion
-      if(empty($usuario)){
+      if(empty($correo)){
         array_push($errores,"El usuario es requerido.");
-      }
-      if(empty($clave1)){
-        array_push($errores,"La clave de acceso es requerida.");
-      }
-      if(empty($clave2)){
-        array_push($errores,"La verificación de la clave de acceso es requerida.");
-      }
-      if($clave1!=$clave2){
-        array_push($errores,"Las claves no coinciden, favor de verificar.");
       }
       if(empty($nombre)){
         array_push($errores,"El nombre del usuario es requerido.");
       }
-      //Crear arreglo de datos
-      $data = [
-          "nombre" => $nombre,
-          "clave1" => $clave1,
-          "clave2" => $clave2,
-          "usuario" => $usuario
-        ];
-    } else {
-      $data = $this->modelo->getUsuarioId($id);
-      $datos = [
-        "titulo" => "Administrativo Usuarios Modifica",
-        "menu" => false,
-        "admon" => true,
-        "data" => $data
-      ];
-      $this->vista("admonUsuariosModificaVista",$datos);
+      if($status=="void"){
+        array_push($errores,"Selecciona el status del usuario.");
+      }
+      if(!empty($clave1) && !empty($clave2)){
+        if($clave1 != $clave2){
+          array_push($errores,"Las valores no coinciden.");
+        }
+      }
+
+      if(empty($errores)){
+
+        //Crear arreglo de datos
+        $data = [
+            "id" => $id,
+            "nombre" => $nombre,
+            "clave1" => $clave1,
+            "clave2" => $clave2,
+            "status" => $status,
+            "correo" => $correo
+          ];
+        
+        //Enviamos al modelo
+        $errores = $this->modelo->modificaUsuario($data);
+
+        //Validamos la modificación
+        if(empty($errores)){
+          header("location:".RUTA."admonUsuarios");
+        }
+              
+      }
     }
+    $data = $this->modelo->getUsuarioId($id);
+    $llaves = $this->modelo->getLlaves("admonStatus");
+    $datos = [
+      "titulo" => "Administrativo Usuarios Modifica",
+      "menu" => false,
+      "admon" => true,
+      "status" => $llaves,
+      "errores" => $errores,
+      "data" => $data
+    ];
+    $this->vista("admonUsuariosModificaVista",$datos);
   }
 }
 
