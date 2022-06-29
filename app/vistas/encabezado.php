@@ -21,6 +21,9 @@
       print "<li class='nav-item'>";
       print "<a href='".RUTA."admonUsuarios' class='nav-link'>Usuarios</a>";
       print "</li>";
+      print "<li class='nav-item'>";
+      print "<a href='".RUTA."admonProductos' class='nav-link'>Productos</a>";
+      print "</li>";
       print "</ul>";
     }
   }
