@@ -2,7 +2,7 @@
 <script src="<?php print RUTA; ?>js/admonProductosAltaVista.js"></script>
 <h1 class="text-center">Alta de un producto</h1>
 <div class="card p-4 bg-light">
-  <form action="<?php print RUTA; ?>admonProductos/alta/" method="POST">
+  <form action="<?php print RUTA; ?>admonProductos/alta/" method="POST" enctype="multipart/form-data">
     <div class="form-group text-left">
       <label for="usuario">* Tipo de producto:</label>
       <select class="form-control" name="tipo" id="tipo">
@@ -34,7 +34,7 @@
       ?>"
       >
     </div>
-<!-- cogemos identificador libro -->
+
     <div id="libro">
       <div class="form-group text-left">
       <label for="autor">* Autor:</label>
@@ -67,7 +67,7 @@
     </div>
 
     </div>
-<!-- cogemos identificador curso -->
+
     <div id="curso">
     <div class="form-group text-left">
       <label for="publico">* Público objetivo:</label>
@@ -101,10 +101,11 @@
       
 
     </div>
-
+<!-- patters para controlar numeros -->
     <div class="form-group text-left">
       <label for="precio">* Precio del producto:</label>
-      <input type="text" name="precio" class="form-control"
+      <input type="text" name="precio" class="form-control" 
+      pattern="^(\d|-)?(\d|,)*\.?\d*$" 
       placeholder="Escribe el precio del producto sin comas ni símbolos." required
       value="<?php 
       print isset($datos['data']['precio'])?$datos['data']['precio']:''; 
@@ -114,7 +115,8 @@
 
     <div class="form-group text-left">
       <label for="descuento">Descuento del producto:</label>
-      <input type="text" name="descuento" class="form-control"
+      <input type="text" name="descuento" class="form-control" 
+      pattern="^(\d|-)?(\d|,)*\.?\d*$" 
       placeholder="Escribe el descuento del producto sin comas ni símbolos." 
       value="<?php 
       print isset($datos['data']['descuento'])?$datos['data']['descuento']:''; 
@@ -124,7 +126,8 @@
 
     <div class="form-group text-left">
       <label for="envio">Costo del envío del producto:</label>
-      <input type="text" name="envio" class="form-control"
+      <input type="text" name="envio" class="form-control" 
+      pattern="^(\d|-)?(\d|,)*\.?\d*$" 
       placeholder="Escribe el costo del envio del producto sin comas ni símbolos." 
       value="<?php 
       print isset($datos['data']['envio'])?$datos['data']['envio']:''; 
@@ -135,14 +138,13 @@
     <div class="form-group text-left">
       <label for="imagen">* Imagen del producto:</label>
       <input type="file" name="imagen" class="form-control" 
-      accept="image/jpeg" 
-      >
+      accept="image/jpeg"/>
     </div>
 
     <div class="form-group text-left">
       <label for="fecha">* Fecha del producto:</label>
       <input type="date" name="fecha" class="form-control"
-      placeholder="Fecha de creación o control del producto." 
+      placeholder="Fecha de creación o control del producto (DD/MM/AAAA)." 
       value="<?php 
       print isset($datos['data']['fecha'])?$datos['data']['fecha']:''; 
       ?>"
@@ -173,7 +175,13 @@
     <div class="form-group text-left">
       <label for="status">Estatus del producto:</label>
       <select class="form-control" name="status" id="status">
-        <option value="void">Selecciona el estatus del producto</option>
+        <option value="void">Selecciona el status del producto</option>
+        <?php
+          for ($i=0; $i < count($datos["statusProducto"]); $i++) { 
+            print "<option value='".$datos["statusProducto"][$i]["indice"]."'";
+            print ">".$datos["statusProducto"][$i]["cadena"]."</option>";
+          } 
+        ?>
       </select>
     </div>
 

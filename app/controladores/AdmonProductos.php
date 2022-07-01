@@ -42,8 +42,11 @@ class AdmonProductos extends Controlador
     $data = array();
     $errores = array();
 
-    //Leemos la llaves de tipoProducto para elegirlo
+    //Leemos la llaves de tipoProducto
     $llaves = $this->modelo->getLlaves("tipoProducto");
+
+    //Leemos los estatus del producto para indicar si esta o no activo
+    $statusProducto = $this->modelo->getLlaves("statusProducto");
 
     //Vista Alta
     $datos = [
@@ -52,6 +55,7 @@ class AdmonProductos extends Controlador
       "admon" => true,
       "errores" => $errores,
       "tipoProducto" => $llaves,
+      "statusProducto" => $statusProducto,
       "data" => $data
     ];
     $this->vista("admonProductosAltaVista",$datos);
