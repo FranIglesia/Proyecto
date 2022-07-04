@@ -1,4 +1,5 @@
 <?php include_once("encabezado.php"); ?>
+<script src="https://cdn.ckeditor.com/ckeditor5/11.2.0/classic/ckeditor.js"></script>
 <script src="<?php print RUTA; ?>js/admonProductosAltaVista.js"></script>
 <h1 class="text-center">Alta de un producto</h1>
 <div class="card p-4 bg-light">
@@ -26,13 +27,9 @@
       >
     </div>
     <div class="form-group text-left">
-      <label for="descripcion">* Descripción:</label>
-      <input type="text" name="descripcion" class="form-control" required
-      placeholder="Escribe la descripción del producto"
-      value="<?php 
-      print isset($datos['data']['descripcion'])?$datos['data']['descripcion']:''; 
-      ?>"
-      >
+      <label for="content">* Descripción:</label>
+      <textarea name="content" id="editor" rows="10">
+      </textarea>
     </div>
 
     <div id="libro">
@@ -48,7 +45,7 @@
 
       <div class="form-group text-left">
       <label for="editorial">* Editorial:</label>
-      <input type="text" name="editorial" class="form-control" required
+      <input type="text" name="editorial" class="form-control" 
       placeholder="Escribe la editorial del libro"
       value="<?php 
       print isset($datos['data']['editorial'])?$datos['data']['editorial']:''; 
@@ -58,7 +55,7 @@
 
       <div class="form-group text-left">
       <label for="pag">* Páginas:</label>
-      <input type="text" name="pag" class="form-control" required
+      <input type="text" name="pag" class="form-control" 
       placeholder="Escribe el número de páginas del libro"
       value="<?php 
       print isset($datos['data']['pag'])?$datos['data']['pag']:''; 
@@ -71,7 +68,7 @@
     <div id="curso">
     <div class="form-group text-left">
       <label for="publico">* Público objetivo:</label>
-      <input type="text" name="publico" class="form-control" required
+      <input type="text" name="publico" class="form-control" 
       placeholder="Escribe el público objetivo del curso"
       value="<?php 
       print isset($datos['data']['publico'])?$datos['data']['publico']:''; 
@@ -81,7 +78,7 @@
 
       <div class="form-group text-left">
       <label for="objetivo">* Objetivos:</label>
-      <input type="text" name="objetivo" class="form-control" required
+      <input type="text" name="objetivo" class="form-control" 
       placeholder="Escribe los objetivos del libro"
       value="<?php 
       print isset($datos['data']['objetivo'])?$datos['data']['objetivo']:''; 
@@ -91,7 +88,7 @@
 
       <div class="form-group text-left">
       <label for="necesario">* Conocimientos necesarios previos:</label>
-      <input type="text" name="necesario" class="form-control" required
+      <input type="text" name="necesario" class="form-control" 
       placeholder="Escribe los conocimientos necesarios previos"
       value="<?php 
       print isset($datos['data']['necesario'])?$datos['data']['necesario']:''; 
@@ -101,7 +98,7 @@
       
 
     </div>
-<!-- patters para controlar numeros -->
+
     <div class="form-group text-left">
       <label for="precio">* Precio del producto:</label>
       <input type="text" name="precio" class="form-control" 
@@ -155,6 +152,12 @@
       <label for="relacion1">Producto relacionado:</label>
       <select class="form-control" name="relacion1" id="relacion1">
         <option value="void">Selecciona el producto relacionado</option>
+        <?php
+        for ($i=0; $i < count($datos["catalogo"]); $i++) { 
+            print "<option value='".$datos["catalogo"][$i]["id"]."'";
+            print ">".$datos["catalogo"][$i]["nombre"]."</option>";
+        }
+        ?>
       </select>
     </div>
 
@@ -162,6 +165,12 @@
       <label for="relacion2">Producto relacionado:</label>
       <select class="form-control" name="relacion2" id="relacion2">
         <option value="void">Selecciona el producto relacionado</option>
+        <?php
+        for ($i=0; $i < count($datos["catalogo"]); $i++) { 
+            print "<option value='".$datos["catalogo"][$i]["id"]."'";
+            print ">".$datos["catalogo"][$i]["nombre"]."</option>";
+        }
+        ?>
       </select>
     </div>
 
@@ -169,6 +178,12 @@
       <label for="relacion3">Producto relacionado:</label>
       <select class="form-control" name="relacion3" id="relacion3">
         <option value="void">Selecciona el producto relacionado</option>
+        <?php
+        for ($i=0; $i < count($datos["catalogo"]); $i++) { 
+            print "<option value='".$datos["catalogo"][$i]["id"]."'";
+            print ">".$datos["catalogo"][$i]["nombre"]."</option>";
+        }
+        ?>
       </select>
     </div>
 
@@ -185,12 +200,13 @@
       </select>
     </div>
 
-    <div class="form-group text-left">
-      <label for="masvendido"><input type="checkbox" name="masvendido" id="masvendido">Producto más vendido</label>
+    <div class="form-check text-left">
+      <input type="checkbox" name="masvendido" id="masvendido" class="form-check-input">
+      <label for="masvendido" class="form-check-label">Producto más vendido</label>
     </div>
 
-    <div class="form-group text-left">
-      <label for="nuevos"><input type="checkbox" name="nuevos" id="nuevos">Producto nuevo</label>
+    <div class="form-check text-left">
+      <input type="checkbox" name="nuevos" id="nuevos" class="form-check-input"><label for="nuevos" class="form-check-label">Producto nuevo</label>
     </div>
 
     <div class="form-group text-left">
@@ -199,4 +215,11 @@
     </div>
   </form>
 </div><!--card-->
-<?php include_once("piepagina.php"); ?>
+<?php include_once("piepagina.php"); ?> <!-- //añadimos CKeditor -->
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#editor' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>

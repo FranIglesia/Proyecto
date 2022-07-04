@@ -1,6 +1,6 @@
 <?php
 /**
- * Modelo Productos Admon
+ * Modelo Productos Admon.
  */
 class AdmonProductosModelo{
   private $db;
@@ -18,9 +18,17 @@ class AdmonProductosModelo{
     $data = $this->db->querySelect($sql);
     return $data;
   }
+// controlar catalogos
+  public function getCatalogo(){
+    $sql = "SELECT id, nombre, tipo FROM productos ";
+    $sql.= "WHERE baja=0 AND status!=0 ";
+    $sql.= "Order BY tipo, nombre";
+    $data = $this->db->querySelect($sql);
+    return $data;
+  }
 
   public function getLlaves($tipo){
-    $sql = "SELECT * FROM llaves WHERE tipo='".$tipo."' ORDER BY indice DESC";
+    $sql = "SELECT * FROM llaves WHERE tipo='".$tipo."' ";
     $data = $this->db->querySelect($sql);
     return $data;
   }
