@@ -53,13 +53,13 @@ class AdmonProductos extends Controlador
 
     //Recibimos la información de la vista
     if ($_SERVER['REQUEST_METHOD']=="POST") {
-      //Recibimos la información PHP isset()?valor1:valor2 => valor1 ?? valor2
+      //Recibimos la información PHP7 isset()?valor1:valor2 => valor1 ?? valor2
       $tipo = $_POST['tipo'] ?? "";
-      $nombre = $_POST['nombre'] ?? "";
-      $descripcion = $_POST['descripcion'] ?? "";
-      $precio = $_POST['precio'] ?? "";
-      $descuento = $_POST['descuento'] ?? "0";
-      $envio = $_POST['envio'] ?? "0";
+      $nombre = addslashes(htmlentities($_POST['nombre'] ?? ""));
+      $descripcion = addslashes(htmlentities($_POST['content'] ?? ""));
+      $precio = Valida::numero($_POST['precio'] ?? "");
+      $descuento = Valida::numero($_POST['descuento'] ?? "0");
+      $envio = Valida::numero($_POST['envio'] ?? "0");
       $imagen = $_POST['imagen'] ?? "";
       $fecha = $_POST['fecha'] ?? "";
       $relacion1 = $_POST['relacion1'] ?? "";
@@ -69,17 +69,75 @@ class AdmonProductos extends Controlador
       $nuevos = $_POST['nuevos'] ?? "";
       $status = $_POST['status'] ?? "";
       //Libros
-      $autor = $_POST['autor'] ?? "";
-      $editorial = $_POST['editorial'] ?? "";
-      $pag = $_POST['pag'] ?? "";
+      $autor = addslashes(htmlentities($_POST['autor'] ?? ""));
+      $editorial = addslashes(htmlentities($_POST['editorial'] ?? ""));
+      $pag = Valida::numero($_POST['pag'] ?? "");;
       //Cursos
-      $publico = $_POST['publico'] ?? "";
-      $objetivo = $_POST['objetivos'] ?? "";
-      $necesario = $_POST['necesario'] ?? "";
+      $publico = addslashes(htmlentities($_POST['publico'] ?? ""));
+      $objetivo = addslashes(htmlentities($_POST['objetivos'] ?? ""));
+      $necesario = addslashes(htmlentities($_POST['necesario'] ?? ""));
 
       //Validamos la información
+      if(empty($nombre)){
+        array_push($errores,"El nombre del producto es requerido");
+      }
+      if(empty($descripcion)){
+        array_push($errores,"La descripción del producto es requerido");
+      }
+      if(!is_numeric($precio)){
+        array_push($errores,"El precio debe de ser un número.");
+      }
+      if(!is_numeric($envio)){
+        array_push($errores,"El envío debe de ser un número.");
+      }
+      if(!is_numeric($descuento)){
+        array_push($errores,"El descuento debe de ser un número.");
+      }
+      if($precio < $descuento){
+        array_push($errores,"El descuento no puede ser mayor al precio del producto.");
+      }
+      //1 = curso
+      if($tipo==1){
+        if(empty($publico)){
+          array_push($errores,"El público objetivo del curso es requerido");
+        }
+        if(empty($objetivo)){
+          array_push($errores,"Los objetivos del curso son requeridos");
+        }
+        if(empty($necesario)){
+          array_push($errores,"Los requisitos necesarios del curso son requeridos");
+        }
+      } else if($tipo==2){
+        //2 = libro
+        if(empty($autor)){
+          array_push($errores,"El autor del libro es requerido.");
+        }
+        if(empty($editorial)){
+          array_push($errores,"La editorial del libro es requerida.");
+        }
+        if(!is_numeric($pag)){
+          array_push($errores,"El número de las páginas debe de ser un número.");
+        }
+      }
+      
+      //Crear array de datos
+      $datos = [
+        "nombre" => $nombre,
+        "descripcion" => $descripcion,
+        "autor" => $autor,
+        "editorial" => $editorial,
+        "pag" => $pag,
+        "fecha" => $fecha,
+        "publico" => $publico,
+        "objetivo" => $objetivo,
+        "necesario" => $necesario,
+        "precio" => $precio,
+        "descuento" => $descuento,
+        "envio" => $envio
+      ];
 
-      //Crear arreglo de datos
+      var_dump($datos);
+      var_dump($errores);
 
       if (empty($errores)) {
         
