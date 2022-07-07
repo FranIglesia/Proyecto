@@ -137,7 +137,7 @@
       <input type="file" name="imagen" class="form-control" 
       accept="image/jpeg"/>
     </div>
-
+<!-- //validar fecha -->
     <div class="form-group text-left">
       <label for="fecha">* Fecha del producto:</label>
       <input type="date" name="fecha" class="form-control"
@@ -215,7 +215,7 @@
     </div>
   </form>
 </div><!--card-->
-<?php include_once("piepagina.php"); ?> <!-- //añadimos CKeditor -->
+<?php include_once("piepagina.php"); ?>
 <script>
     ClassicEditor
         .create( document.querySelector( '#editor' ) )

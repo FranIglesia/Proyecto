@@ -60,18 +60,28 @@ class AdmonProductos extends Controlador
       $precio = Valida::numero($_POST['precio'] ?? "");
       $descuento = Valida::numero($_POST['descuento'] ?? "0");
       $envio = Valida::numero($_POST['envio'] ?? "0");
-      $imagen = $_POST['imagen'] ?? "";
+      
+
+      //XAMP 7.0.1
+      $imagen = $_FILES['imagen']['name'];
+      $imagen = Valida::archivo($imagen);
+      //
       $fecha = $_POST['fecha'] ?? "";
       $relacion1 = $_POST['relacion1'] ?? "";
       $relacion2 = $_POST['relacion2'] ?? "";
       $relacion3 = $_POST['relacion3'] ?? "";
+      //
       $masvendido = $_POST['masvendido'] ?? "";
-      $nuevos = $_POST['nuevos'] ?? "";
+      $nuevo = $_POST['nuevo'] ?? "";
+      //validamos los checkboxes
+      $masvendido = ($masvendido=="")?"0":"1";
+      $nuevo = ($nuevo=="")?"0":"1";
+      //
       $status = $_POST['status'] ?? "";
       //Libros
       $autor = addslashes(htmlentities($_POST['autor'] ?? ""));
       $editorial = addslashes(htmlentities($_POST['editorial'] ?? ""));
-      $pag = Valida::numero($_POST['pag'] ?? "");;
+      $pag = Valida::numero($_POST['pag'] ?? "");
       //Cursos
       $publico = addslashes(htmlentities($_POST['publico'] ?? ""));
       $objetivo = addslashes(htmlentities($_POST['objetivos'] ?? ""));
@@ -95,6 +105,11 @@ class AdmonProductos extends Controlador
       }
       if($precio < $descuento){
         array_push($errores,"El descuento no puede ser mayor al precio del producto.");
+      }
+      if(!Valida::fecha($fecha)){
+        array_push($errores,"La fecha es errónea o su formato es erróneo (AAAA-MM-DD).");
+      } else if(Valida::fechaDif($fecha)){
+        array_push($errores,"La fecha no puede ser mayor a la fecha actual.");
       }
       //1 = curso
       if($tipo==1){
@@ -120,24 +135,26 @@ class AdmonProductos extends Controlador
         }
       }
       
-      //Crear array de datos
+      //Crear arreglo de datos
       $datos = [
         "nombre" => $nombre,
         "descripcion" => $descripcion,
         "autor" => $autor,
         "editorial" => $editorial,
         "pag" => $pag,
-        "fecha" => $fecha,
         "publico" => $publico,
         "objetivo" => $objetivo,
         "necesario" => $necesario,
         "precio" => $precio,
         "descuento" => $descuento,
-        "envio" => $envio
+        "envio" => $envio,
+        "fecha" => $fecha,
+        "imagen" => $imagen,
+        "masvendido" => $masvendido,
+        "nuevo" => $nuevo
       ];
 
       var_dump($datos);
-      var_dump($errores);
 
       if (empty($errores)) {
         
