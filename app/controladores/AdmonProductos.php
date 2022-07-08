@@ -55,12 +55,13 @@ class AdmonProductos extends Controlador
     if ($_SERVER['REQUEST_METHOD']=="POST") {
       //Recibimos la información PHP7 isset()?valor1:valor2 => valor1 ?? valor2
       $tipo = $_POST['tipo'] ?? "";
-      $nombre = addslashes(htmlentities($_POST['nombre'] ?? ""));
-      $descripcion = addslashes(htmlentities($_POST['content'] ?? ""));
+      $nombre = Valida::cadena($_POST['nombre'] ?? "");
+      $descripcion = Valida::cadena($_POST['content'] ?? "");
       $precio = Valida::numero($_POST['precio'] ?? "");
       $descuento = Valida::numero($_POST['descuento'] ?? "0");
       $envio = Valida::numero($_POST['envio'] ?? "0");
-      
+      //XAMP 5.0.3 
+      //$imagen = $_POST['imagen'];
 
       //XAMP 7.0.1
       $imagen = $_FILES['imagen']['name'];
@@ -79,13 +80,13 @@ class AdmonProductos extends Controlador
       //
       $status = $_POST['status'] ?? "";
       //Libros
-      $autor = addslashes(htmlentities($_POST['autor'] ?? ""));
-      $editorial = addslashes(htmlentities($_POST['editorial'] ?? ""));
+      $autor = Valida::cadena($_POST['autor'] ?? "");
+      $editorial = Valida::cadena($_POST['editorial'] ?? "");
       $pag = Valida::numero($_POST['pag'] ?? "");
       //Cursos
-      $publico = addslashes(htmlentities($_POST['publico'] ?? ""));
-      $objetivo = addslashes(htmlentities($_POST['objetivos'] ?? ""));
-      $necesario = addslashes(htmlentities($_POST['necesario'] ?? ""));
+      $publico = Valida::cadena($_POST['publico'] ?? "");
+      $objetivo = Valida::cadena($_POST['objetivos'] ?? "");
+      $necesario = Valida::cadena($_POST['necesario'] ?? "");
 
       //Validamos la información
       if(empty($nombre)){
@@ -134,6 +135,26 @@ class AdmonProductos extends Controlador
           array_push($errores,"El número de las páginas debe de ser un número.");
         }
       }
+      if(Valida::archivoImagen($_FILES['imagen']['tmp_name'])){
+        //Cambiar el nombre del archivo 
+        $imagen = Valida::archivo($nombre);
+        $imagen = strtolower($imagen.".jpg");
+
+        //Subir el archivo
+        if (is_uploaded_file($_FILES['imagen']['tmp_name'])) {
+          //copiamos el archivo temporal
+          copy($_FILES['imagen']['tmp_name'],"img/".$imagen);
+          //Validar 240px
+          Valida::imagen($imagen,240);
+        } else {
+          array_push($errores, "Error al subir el archivo de imágen.");
+        }
+      } else {
+        array_push($errores, "Formato de la imagen no aceptado.");
+      }
+
+      
+      
       
       //Crear arreglo de datos
       $datos = [
