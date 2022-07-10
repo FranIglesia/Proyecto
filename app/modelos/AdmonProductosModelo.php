@@ -18,7 +18,7 @@ class AdmonProductosModelo{
     $data = $this->db->querySelect($sql);
     return $data;
   }
-// controlar catalogos
+
   public function getCatalogo(){
     $sql = "SELECT id, nombre, tipo FROM productos ";
     $sql.= "WHERE baja=0 AND status!=0 ";
@@ -51,6 +51,36 @@ class AdmonProductosModelo{
   public function modificaProductos($data){
     $errores = array();
     return $errores;
+  }
+
+  public function altaProducto($data){
+    $sql = "INSERT INTO productos VALUES(0,"; //1. id
+    $sql.= "'".$data['tipo']."', ";           //2. tipo
+   $sql.= "'".$data['nombre']."', ";          //3. nombre
+   $sql.= "'".$data['descripcion']."', ";     //4. descripcion
+   $sql.= $data['precio'].", ";               //5. precio
+   $sql.= $data['descuento'].", ";            //6. descuento 
+   $sql.= $data['envio'].", ";                //7. envio
+   $sql.= "'".$data['imagen']."', ";          //8. imagen
+   $sql.= "'".$data['fecha']."', ";           //9. fecha
+   $sql.= "'".$data['relacion1']."', ";       //10. relacion1
+   $sql.= "'".$data['relacion2']."', ";       //11. relacion2
+   $sql.= "'".$data['relacion3']."', ";       //12. relacion3
+   $sql.= "'".$data['masvendido']."', ";      //13. masvendido
+   $sql.= "'".$data['nuevo']."', ";           //14. nuevos
+   $sql.= "'".$data['status']."', ";          //15. status
+   $sql.= "0, ";                              //16. baja
+   $sql.= "(NOW()), ";                        //17. fecha alta
+   $sql.= "'', ";                             //18. fecha modificado
+   $sql.= "'', ";                             //19. fecha baja
+   $sql.= "'".$data['autor']."', ";           //20. autor
+   $sql.= "'".$data['editorial']."', ";       //21. editorial
+   $sql.= $data['pag'].", ";                  //22. pag
+   $sql.= "'".$data['publico']."', ";         //23. publico
+   $sql.= "'".$data['objetivo']."', ";        //24. objetivo
+   $sql.= "'".$data['necesario']."')";       //25. necesario
+   print $sql;
+   return $this->db->queryNoSelect($sql);
   }
 }
 

@@ -134,9 +134,11 @@ class AdmonProductos extends Controlador
         if(!is_numeric($pag)){
           array_push($errores,"El número de las páginas debe de ser un número.");
         }
+      } else {
+        array_push($errores,"Debes de seleccionar un tipo de producto.");
       }
       if(Valida::archivoImagen($_FILES['imagen']['tmp_name'])){
-        //Cambiar el nombre del archivo 
+        //Cambiar el nombre del archivo
         $imagen = Valida::archivo($nombre);
         $imagen = strtolower($imagen.".jpg");
 
@@ -153,11 +155,9 @@ class AdmonProductos extends Controlador
         array_push($errores, "Formato de la imagen no aceptado.");
       }
 
-      
-      
-      
       //Crear arreglo de datos
-      $datos = [
+      $data = [
+        "tipo" => $tipo,
         "nombre" => $nombre,
         "descripcion" => $descripcion,
         "autor" => $autor,
@@ -172,19 +172,20 @@ class AdmonProductos extends Controlador
         "fecha" => $fecha,
         "imagen" => $imagen,
         "masvendido" => $masvendido,
-        "nuevo" => $nuevo
+        "nuevo" => $nuevo,
+        "status" => $status,
+        "relacion1" => $relacion1,
+        "relacion2" => $relacion2,
+        "relacion3" => $relacion3
       ];
-
-      var_dump($datos);
 
       if (empty($errores)) {
         
         //Enviamos al modelo
-        //if (condition) {
-          # code...
-        //}
+        if ($this->modelo->altaProducto($data)) {
+          header("location:".RUTA."admonProductos");
+        }
       }
-
     }
 
     //Vista Alta
