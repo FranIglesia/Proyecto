@@ -17,8 +17,8 @@ class Valida{
   }
 
   public static function archivo($cadena){
-    $buscar  = array(' ', '*', '!','@','?','á','é','í','ó','ú','Á','É','í','ó','Ú','ñ','Ñ','Ü','ü');
-    $reemplazar = array('-', '', '','','','a','e','i','o','u','A','E','I','O','U','n','N','U','u');
+    $buscar  = array(' ', '*', '!','@','?','á','é','í','ó','ú','Á','É','í','ó','Ú','ñ','Ñ','Ü','ü','¿','¡');
+    $reemplazar = array('-', '', '','','','a','e','i','o','u','A','E','I','O','U','n','N','U','u','','');
     $cadena = str_replace($buscar, $reemplazar, $cadena);
     return $cadena;
   }
@@ -49,7 +49,7 @@ class Valida{
     $nuevoAncho = $anchoNuevo;
     $factor = $anchoNuevo / $ancho;
     $nuevoAlto = $alto * $factor;
-//lo comento 
+
     // $imagen = imagecreatefromjpeg($archivo);
 
     // //Creamos el lienzo para la nueva imagen
@@ -64,8 +64,8 @@ class Valida{
   }
 
   public static function cadena($cadena){
-    $cadena = escapeshellcmd($cadena);
-     $buscar  = array('^', 'delete', 'drop','truncate','exec','system');
+    //$cadena = escapeshellcmd($cadena); dejo de utilizarlo
+    $buscar  = array('^', 'delete', 'drop','truncate','exec','system');
     $reemplazar = array('-', 'dele*te', 'dr*op','truneca*te','ex*ec','syst*em');
     $cadena = str_replace($buscar, $reemplazar, $cadena);
     $cadena = addslashes(htmlentities($cadena));

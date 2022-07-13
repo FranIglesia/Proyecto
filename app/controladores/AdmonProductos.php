@@ -60,9 +60,7 @@ class AdmonProductos extends Controlador
       $precio = Valida::numero($_POST['precio'] ?? "");
       $descuento = Valida::numero($_POST['descuento'] ?? "0");
       $envio = Valida::numero($_POST['envio'] ?? "0");
-      //XAMP 5.0.3 
-      //$imagen = $_POST['imagen'];
-
+     
       //XAMP 7.0.1
       $imagen = $_FILES['imagen']['name'];
       $imagen = Valida::archivo($imagen);
@@ -139,7 +137,7 @@ class AdmonProductos extends Controlador
       }
       if(Valida::archivoImagen($_FILES['imagen']['tmp_name'])){
         //Cambiar el nombre del archivo
-        $imagen = Valida::archivo($nombre);
+        $imagen = Valida::archivo(html_entity_decode($nombre));
         $imagen = strtolower($imagen.".jpg");
 
         //Subir el archivo
@@ -199,6 +197,7 @@ class AdmonProductos extends Controlador
       "catalogo" => $catalogo,
       "data" => $data
     ];
+
     $this->vista("admonProductosAltaVista",$datos);
   }
 

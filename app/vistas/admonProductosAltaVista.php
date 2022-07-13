@@ -3,7 +3,7 @@
 <script src="<?php print RUTA; ?>js/admonProductosAltaVista.js"></script>
 <h1 class="text-center">Alta de un producto</h1>
 <div class="card p-4 bg-light">
-  <form action="<?php print RUTA; ?>admonProductos/alta/" method="POST" enctype="multipart/form-data">
+  <form enctype="multipart/form-data" action="<?php print RUTA; ?>admonProductos/alta/" method="POST">
     <div class="form-group text-left">
       <label for="usuario">* Tipo de producto:</label>
       <select class="form-control" name="tipo" id="tipo">
@@ -11,6 +11,11 @@
         <?php
           for ($i=0; $i < count($datos["tipoProducto"]); $i++) { 
             print "<option value='".$datos["tipoProducto"][$i]["indice"]."'";
+            if(isset($datos["data"]["tipo"])){
+              if($datos["data"]["tipo"]==$datos["tipoProducto"][$i]["indice"]){
+                print " selected ";
+              }
+            }
             print ">".$datos["tipoProducto"][$i]["cadena"]."</option>";
           } 
         ?>
@@ -19,7 +24,7 @@
 
     <div class="form-group text-left">
       <label for="nombre">* Nombre del producto:</label>
-      <input type="text" name="nombre" class="form-control" required
+      <input type="text" name="nombre" class="form-control" 
       placeholder="Escribe el nombre del producto."
       value="<?php 
       print isset($datos['data']['nombre'])?$datos['data']['nombre']:''; 
@@ -29,13 +34,18 @@
     <div class="form-group text-left">
       <label for="content">* Descripción:</label>
       <textarea name="content" id="editor" rows="10">
+        <?php
+        if(isset($datos['data']['descripcion'])){
+          print $datos['data']['descripcion']; 
+        }
+        ?>
       </textarea>
     </div>
 
     <div id="libro">
       <div class="form-group text-left">
       <label for="autor">* Autor:</label>
-      <input type="text" name="autor" class="form-control" required
+      <input type="text" name="autor" class="form-control" 
       placeholder="Escribe el autor del libro"
       value="<?php 
       print isset($datos['data']['autor'])?$datos['data']['autor']:''; 
@@ -103,7 +113,7 @@
       <label for="precio">* Precio del producto:</label>
       <input type="text" name="precio" class="form-control" 
       pattern="^(\d|-)?(\d|,)*\.?\d*$" 
-      placeholder="Escribe el precio del producto sin comas ni símbolos." required
+      placeholder="Escribe el precio del producto sin comas ni símbolos." 
       value="<?php 
       print isset($datos['data']['precio'])?$datos['data']['precio']:''; 
       ?>"
@@ -134,10 +144,14 @@
 
     <div class="form-group text-left">
       <label for="imagen">* Imagen del producto:</label>
-      <input type="file" name="imagen" class="form-control" 
-      accept="image/jpeg"/>
+      <input type="file" name="imagen" id="imagen" accept="image/jpeg"/>
+      <?php
+      if (isset($datos['data']['imagen'])) {
+        print "<p>".$datos['data']['imagen']."</p>";
+      }
+      ?>
     </div>
-<!-- //validar fecha -->
+
     <div class="form-group text-left">
       <label for="fecha">* Fecha del producto:</label>
       <input type="date" name="fecha" class="form-control"
@@ -155,6 +169,11 @@
         <?php
         for ($i=0; $i < count($datos["catalogo"]); $i++) { 
             print "<option value='".$datos["catalogo"][$i]["id"]."'";
+            if(isset($datos["data"]["relacion1"])){
+              if($datos["data"]["relacion1"]==$datos["catalogo"][$i]["id"]){
+                print " selected ";
+              }
+            }
             print ">".$datos["catalogo"][$i]["nombre"]."</option>";
         }
         ?>
@@ -168,6 +187,11 @@
         <?php
         for ($i=0; $i < count($datos["catalogo"]); $i++) { 
             print "<option value='".$datos["catalogo"][$i]["id"]."'";
+            if(isset($datos["data"]["relacion2"])){
+              if($datos["data"]["relacion2"]==$datos["catalogo"][$i]["id"]){
+                print " selected ";
+              }
+            }
             print ">".$datos["catalogo"][$i]["nombre"]."</option>";
         }
         ?>
@@ -181,6 +205,11 @@
         <?php
         for ($i=0; $i < count($datos["catalogo"]); $i++) { 
             print "<option value='".$datos["catalogo"][$i]["id"]."'";
+            if(isset($datos["data"]["relacion2"])){
+              if($datos["data"]["relacion2"]==$datos["catalogo"][$i]["id"]){
+                print " selected ";
+              }
+            }
             print ">".$datos["catalogo"][$i]["nombre"]."</option>";
         }
         ?>
@@ -194,6 +223,11 @@
         <?php
           for ($i=0; $i < count($datos["statusProducto"]); $i++) { 
             print "<option value='".$datos["statusProducto"][$i]["indice"]."'";
+            if(isset($datos["data"]["status"])){
+              if($datos["data"]["status"]==$datos["statusProducto"][$i]["indice"]){
+                print " selected ";
+              }
+            }
             print ">".$datos["statusProducto"][$i]["cadena"]."</option>";
           } 
         ?>
@@ -201,12 +235,24 @@
     </div>
 
     <div class="form-check text-left">
-      <input type="checkbox" name="masvendido" id="masvendido" class="form-check-input">
+      <input type="checkbox" name="masvendido" id="masvendido" class="form-check-input" 
+      <?php 
+      if(isset($datos['data']['masvendido'])){
+        if($datos['data']['masvendido']=="1") print " checked ";
+      }
+      ?>
+      >
       <label for="masvendido" class="form-check-label">Producto más vendido</label>
     </div>
 
     <div class="form-check text-left">
-      <input type="checkbox" name="nuevos" id="nuevos" class="form-check-input"><label for="nuevos" class="form-check-label">Producto nuevo</label>
+      <input type="checkbox" name="nuevo" id="nuevo" class="form-check-input"
+      <?php 
+      if(isset($datos['data']['nuevo'])){
+        if($datos['data']['nuevo']=="1") print " checked ";
+      }
+      ?>
+      ><label for="nuevo" class="form-check-label">Producto  nuevo</label>
     </div>
 
     <div class="form-group text-left">
