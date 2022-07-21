@@ -1,7 +1,14 @@
 <?php include_once("encabezado.php"); ?>
 <script src="https://cdn.ckeditor.com/ckeditor5/11.2.0/classic/ckeditor.js"></script>
 <script src="<?php print RUTA; ?>js/admonProductosAltaVista.js"></script>
-<h1 class="text-center">Alta de un producto</h1>
+<h1 class="text-center">
+	<!-- controlar subtitulo -->
+  <?php
+  if (isset($datos["subtitulo"])) {
+    print $datos["subtitulo"];
+  }
+  ?>
+</h1>
 <div class="card p-4 bg-light">
   <form enctype="multipart/form-data" action="<?php print RUTA; ?>admonProductos/alta/" method="POST">
     <div class="form-group text-left">
@@ -24,7 +31,7 @@
 
     <div class="form-group text-left">
       <label for="nombre">* Nombre del producto:</label>
-      <input type="text" name="nombre" class="form-control" 
+      <input type="text" name="nombre" class="form-control" required
       placeholder="Escribe el nombre del producto."
       value="<?php 
       print isset($datos['data']['nombre'])?$datos['data']['nombre']:''; 
@@ -45,7 +52,7 @@
     <div id="libro">
       <div class="form-group text-left">
       <label for="autor">* Autor:</label>
-      <input type="text" name="autor" class="form-control" 
+      <input type="text" name="autor" class="form-control" required
       placeholder="Escribe el autor del libro"
       value="<?php 
       print isset($datos['data']['autor'])?$datos['data']['autor']:''; 
@@ -113,7 +120,7 @@
       <label for="precio">* Precio del producto:</label>
       <input type="text" name="precio" class="form-control" 
       pattern="^(\d|-)?(\d|,)*\.?\d*$" 
-      placeholder="Escribe el precio del producto sin comas ni símbolos." 
+      placeholder="Escribe el precio del producto sin comas ni símbolos." required
       value="<?php 
       print isset($datos['data']['precio'])?$datos['data']['precio']:''; 
       ?>"
@@ -256,6 +263,15 @@
     </div>
 
     <div class="form-group text-left">
+      <input type="hidden" name="id" id="id" value="
+      <?php
+        if (isset($datos['data']['id'])) {
+          print $datos['data']['id'];
+        } else {
+          print "";
+        }
+      ?>
+      ">
       <input type="submit" value="Enviar" class="btn btn-success">
       <a href="<?php print RUTA; ?>admonProductos" class="btn btn-info">Regresar</a>
     </div>

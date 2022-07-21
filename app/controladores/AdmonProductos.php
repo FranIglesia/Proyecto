@@ -54,13 +54,18 @@ class AdmonProductos extends Controlador
     //Recibimos la información de la vista
     if ($_SERVER['REQUEST_METHOD']=="POST") {
       //Recibimos la información PHP7 isset()?valor1:valor2 => valor1 ?? valor2
+      //si existe id es una modificación, si no existe es una alta
+      $id = $_POST['id'] ?? "";
+      //
       $tipo = $_POST['tipo'] ?? "";
       $nombre = Valida::cadena($_POST['nombre'] ?? "");
       $descripcion = Valida::cadena($_POST['content'] ?? "");
       $precio = Valida::numero($_POST['precio'] ?? "");
       $descuento = Valida::numero($_POST['descuento'] ?? "0");
       $envio = Valida::numero($_POST['envio'] ?? "0");
-     
+      //XAMP 5.0.3 
+      //$imagen = $_POST['imagen'];
+
       //XAMP 7.0.1
       $imagen = $_FILES['imagen']['name'];
       $imagen = Valida::archivo($imagen);
@@ -135,7 +140,9 @@ class AdmonProductos extends Controlador
       } else {
         array_push($errores,"Debes de seleccionar un tipo de producto.");
       }
-      if(Valida::archivoImagen($_FILES['imagen']['tmp_name'])){
+      if(empty($imagen)){
+        array_push($errores,"Debes seleccionar una imagen para el producto.");
+      } else if(Valida::archivoImagen($_FILES['imagen']['tmp_name'])){
         //Cambiar el nombre del archivo
         $imagen = Valida::archivo(html_entity_decode($nombre));
         $imagen = strtolower($imagen.".jpg");
@@ -155,6 +162,7 @@ class AdmonProductos extends Controlador
 
       //Crear arreglo de datos
       $data = [
+        "id" => $id,
         "tipo" => $tipo,
         "nombre" => $nombre,
         "descripcion" => $descripcion,
@@ -180,15 +188,25 @@ class AdmonProductos extends Controlador
       if (empty($errores)) {
         
         //Enviamos al modelo
-        if ($this->modelo->altaProducto($data)) {
-          header("location:".RUTA."admonProductos");
+        if($id==""){
+          //Alta
+          if ($this->modelo->altaProducto($data)) {
+            header("location:".RUTA."admonProductos");
+          }
+        } else {
+          //Modificacion
+          if ($this->modelo->modificaProducto($data)) {
+            header("location:".RUTA."admonProductos");
+          }
         }
+        
       }
     }
 
-    //Vista Alta
+    //Añadir datos a Vista Alta
     $datos = [
       "titulo" => "Administrativo Productos Alta",
+      "subtitulo" => "Alta de producto",
       "menu" => false,
       "admon" => true,
       "errores" => $errores,
@@ -206,7 +224,32 @@ class AdmonProductos extends Controlador
   }
 
   public function cambio($id=""){
-    # code...
+    //Leemos la llaves de tipoProducto
+    $llaves = $this->modelo->getLlaves("tipoProducto");
+
+    //Leemos los estatus del producto
+    $statusProducto = $this->modelo->getLlaves("statusProducto");
+
+    //Leemos los estatus del producto
+    $catalogo = $this->modelo->getCatalogo();
+
+    //Leemos los datos del registro del id
+    $data = $this->modelo->getProductoId($id);
+
+    //Vista Alta
+    $datos = [
+      "titulo" => "Administrativo Productos Modificar",
+      "subtitulo" => "Modifica producto",
+      "menu" => false,
+      "admon" => true,
+      "errores" => [],
+      "tipoProducto" => $llaves,
+      "statusProducto" => $statusProducto,
+      "catalogo" => $catalogo,
+      "data" => $data
+    ];
+
+    $this->vista("admonProductosAltaVista",$datos);
   }
 }
 
