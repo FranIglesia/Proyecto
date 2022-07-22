@@ -1,6 +1,6 @@
 <?php
 /**
- * Controlador para productos
+ * Controlador para todos los productos
  */
 class AdmonProductos extends Controlador
 {
@@ -55,7 +55,7 @@ class AdmonProductos extends Controlador
     if ($_SERVER['REQUEST_METHOD']=="POST") {
       //Recibimos la información PHP7 isset()?valor1:valor2 => valor1 ?? valor2
       //si existe id es una modificación, si no existe es una alta
-      $id = $_POST['id'] ?? "";
+      $id = trim($_POST['id'] ?? "");
       //
       $tipo = $_POST['tipo'] ?? "";
       $nombre = Valida::cadena($_POST['nombre'] ?? "");
@@ -86,9 +86,10 @@ class AdmonProductos extends Controlador
       $autor = Valida::cadena($_POST['autor'] ?? "");
       $editorial = Valida::cadena($_POST['editorial'] ?? "");
       $pag = Valida::numero($_POST['pag'] ?? "");
+      if(empty($pag)) $pag = 0;
       //Cursos
       $publico = Valida::cadena($_POST['publico'] ?? "");
-      $objetivo = Valida::cadena($_POST['objetivos'] ?? "");
+      $objetivo = Valida::cadena($_POST['objetivo'] ?? "");
       $necesario = Valida::cadena($_POST['necesario'] ?? "");
 
       //Validamos la información
@@ -203,7 +204,7 @@ class AdmonProductos extends Controlador
       }
     }
 
-    //Añadir datos a Vista Alta
+    //Vista Alta
     $datos = [
       "titulo" => "Administrativo Productos Alta",
       "subtitulo" => "Alta de producto",
@@ -220,7 +221,41 @@ class AdmonProductos extends Controlador
   }
 
   public function baja($id=""){
-    # code...
+    //Leemos la llaves de tipoProducto
+    $llaves = $this->modelo->getLlaves("tipoProducto");
+
+    //Leemos los estatus del producto
+    $statusProducto = $this->modelo->getLlaves("statusProducto");
+
+    //Leemos los estatus del producto
+    $catalogo = $this->modelo->getCatalogo();
+
+    //Leemos los datos del registro del id
+    $data = $this->modelo->getProductoId($id);
+
+    //Vista Alta
+    $datos = [
+      "titulo" => "Administrativo Productos Baja",
+      "subtitulo" => "Baja producto",
+      "menu" => false,
+      "admon" => true,
+      "errores" => [],
+      "tipoProducto" => $llaves,
+      "statusProducto" => $statusProducto,
+      "catalogo" => $catalogo,
+      "data" => $data,
+      "baja" => true
+    ];
+    $this->vista("admonProductosAltaVista",$datos);
+  }
+
+  public function bajaLogica($id='')
+  {
+   if (isset($id)) {
+     if($this->modelo->bajaLogica($id)){
+      header("location:".RUTA."admonProductos");
+     }
+   }
   }
 
   public function cambio($id=""){
@@ -248,8 +283,40 @@ class AdmonProductos extends Controlador
       "catalogo" => $catalogo,
       "data" => $data
     ];
-
     $this->vista("admonProductosAltaVista",$datos);
+  }
+
+  public function getMasVendidos()
+  {
+    return $this->modelo->getMasVendidos();
+  }
+
+  public function getNuevos()
+  {
+    return $this->modelo->getNuevos();
+  }
+
+  public function producto($id='',$regresa='')
+  {
+    //Leemos los datos del registro del id
+    $data = $this->modelo->getProductoId($id);
+    //
+    //Enviamos el id del usuario
+    $sesion = new Sesion();
+    $idUsuario = $_SESSION["usuario"]["id"];
+    //
+    //Vista Alta
+    $datos = [
+      "titulo" => "Productos",
+      "subtitulo" => $data["nombre"],
+      "menu" => true,
+      "admon" => false,
+      "regresa" => $regresa,
+      "idUsuario" => $idUsuario,
+      "errores" => [],
+      "data" => $data
+    ];
+    $this->vista("productoVista",$datos);
   }
 }
 

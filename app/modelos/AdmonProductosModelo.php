@@ -1,6 +1,6 @@
 <?php
 /**
- * Modelo Productos Admon.
+ * Modelo Productos
  */
 class AdmonProductosModelo{
   private $db;
@@ -37,14 +37,14 @@ class AdmonProductosModelo{
   }
 
   public function bajaLogica($id){
-    $errores = array();
+    $salida = true;
     $sql = "UPDATE productos SET baja=1, baja_dt=(NOW()) WHERE id=".$id;
     if(!$this->db->queryNoSelect($sql)){
-      array_push($errores,"Error al modificar el registro para baja.");
+      $salida = false;
     }
-    return $errores;
+    return $salida;
   }
-// añadir los cambios
+
   public function modificaProducto($data){
     $salida = false;
     if (!empty($data["id"])) {
@@ -110,6 +110,21 @@ class AdmonProductosModelo{
    $sql.= "'".$data['necesario']."')";       //25. necesario
    //print $sql;
    return $this->db->queryNoSelect($sql);
+  }
+
+  public function getMasVendidos()
+  {
+    $sql = "SELECT * FROM productos WHERE masvendido='1' AND baja=0 LIMIT 8";
+    $data = $this->db->querySelect($sql);
+    return $data;
+  }
+
+  public function getNuevos()
+  {
+    $sql = "SELECT * FROM productos WHERE masvendido='0' ";
+    $sql.= "AND nuevos='1' AND baja=0 LIMIT 8";
+    $data = $this->db->querySelect($sql);
+    return $data;
   }
 }
 

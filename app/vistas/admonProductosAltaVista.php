@@ -2,7 +2,6 @@
 <script src="https://cdn.ckeditor.com/ckeditor5/11.2.0/classic/ckeditor.js"></script>
 <script src="<?php print RUTA; ?>js/admonProductosAltaVista.js"></script>
 <h1 class="text-center">
-	<!-- controlar subtitulo -->
   <?php
   if (isset($datos["subtitulo"])) {
     print $datos["subtitulo"];
@@ -13,7 +12,13 @@
   <form enctype="multipart/form-data" action="<?php print RUTA; ?>admonProductos/alta/" method="POST">
     <div class="form-group text-left">
       <label for="usuario">* Tipo de producto:</label>
-      <select class="form-control" name="tipo" id="tipo">
+      <select class="form-control" name="tipo" id="tipo"
+      <?php
+      if (isset($datos["baja"])) {
+        print "disabled ";
+      }
+      ?>
+      >
         <option value="void">Selecciona el tipo de producto</option>
         <?php
           for ($i=0; $i < count($datos["tipoProducto"]); $i++) { 
@@ -36,27 +41,43 @@
       value="<?php 
       print isset($datos['data']['nombre'])?$datos['data']['nombre']:''; 
       ?>"
+      <?php
+      if (isset($datos["baja"])) {
+        print "disabled ";
+      }
+      ?>
       >
     </div>
     <div class="form-group text-left">
       <label for="content">* Descripción:</label>
-      <textarea name="content" id="editor" rows="10">
-        <?php
+      <textarea name="content" id="editor" rows="10"
+      <?php
+        if (isset($datos["baja"])) {
+          print " disabled ";
+        }
+      ?>
+      >
+      <?php
         if(isset($datos['data']['descripcion'])){
           print $datos['data']['descripcion']; 
         }
-        ?>
+      ?>
       </textarea>
     </div>
 
     <div id="libro">
       <div class="form-group text-left">
       <label for="autor">* Autor:</label>
-      <input type="text" name="autor" class="form-control" required
+      <input type="text" name="autor" class="form-control"
       placeholder="Escribe el autor del libro"
       value="<?php 
       print isset($datos['data']['autor'])?$datos['data']['autor']:''; 
       ?>"
+      <?php
+      if (isset($datos["baja"])) {
+        print " disabled ";
+      }
+      ?>
       >
     </div>
 
@@ -67,6 +88,11 @@
       value="<?php 
       print isset($datos['data']['editorial'])?$datos['data']['editorial']:''; 
       ?>"
+      <?php
+      if (isset($datos["baja"])) {
+        print " disabled ";
+      }
+      ?>
       >
     </div>
 
@@ -77,6 +103,11 @@
       value="<?php 
       print isset($datos['data']['pag'])?$datos['data']['pag']:''; 
       ?>"
+      <?php
+      if (isset($datos["baja"])) {
+        print " disabled ";
+      }
+      ?>
       >
     </div>
 
@@ -90,6 +121,11 @@
       value="<?php 
       print isset($datos['data']['publico'])?$datos['data']['publico']:''; 
       ?>"
+      <?php
+      if (isset($datos["baja"])) {
+        print " disabled ";
+      }
+      ?>
       >
     </div>
 
@@ -100,6 +136,11 @@
       value="<?php 
       print isset($datos['data']['objetivo'])?$datos['data']['objetivo']:''; 
       ?>"
+      <?php
+      if (isset($datos["baja"])) {
+        print " disabled ";
+      }
+      ?>
       >
     </div>
 
@@ -110,6 +151,11 @@
       value="<?php 
       print isset($datos['data']['necesario'])?$datos['data']['necesario']:''; 
       ?>"
+      <?php
+      if (isset($datos["baja"])) {
+        print " disabled ";
+      }
+      ?>
       >
     </div>
       
@@ -124,6 +170,11 @@
       value="<?php 
       print isset($datos['data']['precio'])?$datos['data']['precio']:''; 
       ?>"
+      <?php
+      if (isset($datos["baja"])) {
+        print " disabled ";
+      }
+      ?>
       >
     </div>
 
@@ -135,6 +186,11 @@
       value="<?php 
       print isset($datos['data']['descuento'])?$datos['data']['descuento']:''; 
       ?>"
+      <?php
+      if (isset($datos["baja"])) {
+        print " disabled ";
+      }
+      ?>
       >
     </div>
 
@@ -146,12 +202,23 @@
       value="<?php 
       print isset($datos['data']['envio'])?$datos['data']['envio']:''; 
       ?>"
+      <?php
+      if (isset($datos["baja"])) {
+        print " disabled ";
+      }
+      ?>
       >
     </div>
 
     <div class="form-group text-left">
       <label for="imagen">* Imagen del producto:</label>
-      <input type="file" name="imagen" id="imagen" accept="image/jpeg"/>
+      <input type="file" name="imagen" id="imagen" accept="image/jpeg"/
+      <?php
+      if (isset($datos["baja"])) {
+        print " disabled ";
+      }
+      ?>
+      >
       <?php
       if (isset($datos['data']['imagen'])) {
         print "<p>".$datos['data']['imagen']."</p>";
@@ -166,12 +233,23 @@
       value="<?php 
       print isset($datos['data']['fecha'])?$datos['data']['fecha']:''; 
       ?>"
+      <?php
+      if (isset($datos["baja"])) {
+        print " disabled ";
+      }
+      ?>
       >
     </div>
 
     <div class="form-group text-left">
       <label for="relacion1">Producto relacionado:</label>
-      <select class="form-control" name="relacion1" id="relacion1">
+      <select class="form-control" name="relacion1" id="relacion1"
+      <?php
+      if (isset($datos["baja"])) {
+        print " disabled ";
+      }
+      ?>
+      >
         <option value="void">Selecciona el producto relacionado</option>
         <?php
         for ($i=0; $i < count($datos["catalogo"]); $i++) { 
@@ -189,7 +267,13 @@
 
     <div class="form-group text-left">
       <label for="relacion2">Producto relacionado:</label>
-      <select class="form-control" name="relacion2" id="relacion2">
+      <select class="form-control" name="relacion2" id="relacion2"
+      <?php
+      if (isset($datos["baja"])) {
+        print " disabled ";
+      }
+      ?>
+      >
         <option value="void">Selecciona el producto relacionado</option>
         <?php
         for ($i=0; $i < count($datos["catalogo"]); $i++) { 
@@ -207,7 +291,13 @@
 
     <div class="form-group text-left">
       <label for="relacion3">Producto relacionado:</label>
-      <select class="form-control" name="relacion3" id="relacion3">
+      <select class="form-control" name="relacion3" id="relacion3"
+      <?php
+      if (isset($datos["baja"])) {
+        print " disabled ";
+      }
+      ?>
+      >
         <option value="void">Selecciona el producto relacionado</option>
         <?php
         for ($i=0; $i < count($datos["catalogo"]); $i++) { 
@@ -225,7 +315,13 @@
 
     <div class="form-group text-left">
       <label for="status">Estatus del producto:</label>
-      <select class="form-control" name="status" id="status">
+      <select class="form-control" name="status" id="status" 
+      <?php
+      if (isset($datos["baja"])) {
+        print " disabled ";
+      }
+      ?>
+      >
         <option value="void">Selecciona el status del producto</option>
         <?php
           for ($i=0; $i < count($datos["statusProducto"]); $i++) { 
@@ -247,6 +343,9 @@
       if(isset($datos['data']['masvendido'])){
         if($datos['data']['masvendido']=="1") print " checked ";
       }
+      if (isset($datos["baja"])) {
+        print " disabled ";
+      }
       ?>
       >
       <label for="masvendido" class="form-check-label">Producto más vendido</label>
@@ -255,8 +354,11 @@
     <div class="form-check text-left">
       <input type="checkbox" name="nuevo" id="nuevo" class="form-check-input"
       <?php 
-      if(isset($datos['data']['nuevo'])){
-        if($datos['data']['nuevo']=="1") print " checked ";
+      if(isset($datos['data']['nuevos'])){
+        if($datos['data']['nuevos']=="1") print " checked ";
+      }
+      if (isset($datos["baja"])) {
+        print " disabled ";
       }
       ?>
       ><label for="nuevo" class="form-check-label">Producto  nuevo</label>
@@ -271,9 +373,16 @@
           print "";
         }
       ?>
-      ">
+      ">  
+      <?php
+      if (isset($datos["baja"])) { ?>
+        <a href="<?php print RUTA; ?>admonProductos/bajaLogica/<?php print $datos['data']['id']; ?>" class="btn btn-danger">Borrar</a>
+        <a href="<?php print RUTA; ?>admonProductos" class="btn btn-danger">Regresar</a>
+        <p><b>Advertencia: una vez borrado el registro, no podrá recuperar la información</b></p>
+      <?php } else { ?> 
       <input type="submit" value="Enviar" class="btn btn-success">
       <a href="<?php print RUTA; ?>admonProductos" class="btn btn-info">Regresar</a>
+    <?php } ?> 
     </div>
   </form>
 </div><!--card-->
