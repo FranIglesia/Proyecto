@@ -1,6 +1,6 @@
 <?php
 /**
- * Controlador Login
+ * Controlador tienda
  */
 class Tienda extends Controlador{
   private $modelo;
@@ -9,20 +9,28 @@ class Tienda extends Controlador{
   {
     $this->modelo = $this->modelo("TiendaModelo");
   }
-// CONTROLAR SESION
+
   function caratula(){
     $sesion = new Sesion();
     if ($sesion->getLogin()) {
-      //var_dump($sesion->getUsuario());
+      //
       $datos = [
         "titulo" => "Bienvenid@ a nuestra tienda",
-        "menu" => false
+        "menu" => true
       ];
       $this->vista("tiendaVista",$datos);
     } else {
       header("location:".RUTA);
-    } 
+    }
   }
 
+  function logout(){
+    session_start();
+    if (isset($_SESSION["usuario"])) {
+      $sesion = new Sesion();
+      $sesion->finalizarLogin();
+    }
+    header("location:".RUTA);
+  }
 }
 ?>

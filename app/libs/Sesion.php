@@ -2,7 +2,6 @@
 /**
  * Manejar sesión
  */
-//CLASE SESION
 class Sesion{
   private $login = false;
   private $usuario;
@@ -17,7 +16,7 @@ class Sesion{
       unset($this->usuario);
       $this->login = false;
     }
-  } 
+  }
 
   public function iniciarLogin($usuario){
     if ($usuario) {
@@ -25,10 +24,11 @@ class Sesion{
       $this->login = true;
     }
   }
-
+//sesion logout
   public function finalizarLogin(){
     unset($_SESSION["usuario"]);
     unset($this->usuario);
+    session_destroy();
     $this->login = false;
   }
 
