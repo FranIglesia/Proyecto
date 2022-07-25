@@ -1,6 +1,6 @@
 <?php
 /**
- * Controlador para todos los productos
+ * Controlador para productos
  */
 class AdmonProductos extends Controlador
 {
@@ -55,7 +55,7 @@ class AdmonProductos extends Controlador
     if ($_SERVER['REQUEST_METHOD']=="POST") {
       //Recibimos la información PHP7 isset()?valor1:valor2 => valor1 ?? valor2
       //si existe id es una modificación, si no existe es una alta
-      $id = trim($_POST['id'] ?? "");
+      $id = $_POST['id'] ?? "";
       //
       $tipo = $_POST['tipo'] ?? "";
       $nombre = Valida::cadena($_POST['nombre'] ?? "");
@@ -86,10 +86,9 @@ class AdmonProductos extends Controlador
       $autor = Valida::cadena($_POST['autor'] ?? "");
       $editorial = Valida::cadena($_POST['editorial'] ?? "");
       $pag = Valida::numero($_POST['pag'] ?? "");
-      if(empty($pag)) $pag = 0;
       //Cursos
       $publico = Valida::cadena($_POST['publico'] ?? "");
-      $objetivo = Valida::cadena($_POST['objetivo'] ?? "");
+      $objetivo = Valida::cadena($_POST['objetivos'] ?? "");
       $necesario = Valida::cadena($_POST['necesario'] ?? "");
 
       //Validamos la información
@@ -291,19 +290,12 @@ class AdmonProductos extends Controlador
     return $this->modelo->getMasVendidos();
   }
 
-  public function getNuevos()
-  {
-    return $this->modelo->getNuevos();
-  }
-
-  public function producto($id='',$regresa='')
+  public function producto($id='')
   {
     //Leemos los datos del registro del id
     $data = $this->modelo->getProductoId($id);
     //
-    //Enviamos el id del usuario
-    $sesion = new Sesion();
-    $idUsuario = $_SESSION["usuario"]["id"];
+    //Llamamos a la vista del producto elegido
     //
     //Vista Alta
     $datos = [
@@ -311,8 +303,6 @@ class AdmonProductos extends Controlador
       "subtitulo" => $data["nombre"],
       "menu" => true,
       "admon" => false,
-      "regresa" => $regresa,
-      "idUsuario" => $idUsuario,
       "errores" => [],
       "data" => $data
     ];
