@@ -123,7 +123,7 @@
       ?>"
       <?php
       if (isset($datos["baja"])) {
-        print " disabled ";
+        print " disabled "; 
       }
       ?>
       >
@@ -373,7 +373,7 @@
           print "";
         }
       ?>
-      ">  
+      ">
       <?php
       if (isset($datos["baja"])) { ?>
         <a href="<?php print RUTA; ?>admonProductos/bajaLogica/<?php print $datos['data']['id']; ?>" class="btn btn-danger">Borrar</a>

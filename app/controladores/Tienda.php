@@ -1,6 +1,6 @@
 <?php
 /**
- * Controlador tienda
+ * Controlador Login
  */
 class Tienda extends Controlador{
   private $modelo;
@@ -14,13 +14,18 @@ class Tienda extends Controlador{
     $sesion = new Sesion();
     if ($sesion->getLogin()) {
       //
-      //Leer los productos mas vendidos de la tienda
+      //Leer los productos mas vendidos
       //
       $data = $this->getMasVendidos();
+      //
+      //Leer los productos nuevos de la tienda
+      //
+      $nuevos = $this->getNuevos();
       //
       $datos = [
         "titulo" => "Bienvenid@ a nuestra tienda",
         "data" => $data,
+        "nuevos" => $nuevos,
         "menu" => true
       ];
       $this->vista("tiendaVista",$datos);
@@ -44,6 +49,16 @@ class Tienda extends Controlador{
     require_once "AdmonProductos.php";
     $productos = new AdmonProductos();
     $data = $productos->getMasVendidos();
+    unset($productos);
+    return $data;
+  }
+
+  public function getNuevos()
+  {
+    $data = array();
+    require_once "AdmonProductos.php";
+    $productos = new AdmonProductos();
+    $data = $productos->getNuevos();
     unset($productos);
     return $data;
   }

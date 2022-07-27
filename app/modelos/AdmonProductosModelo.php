@@ -111,10 +111,18 @@ class AdmonProductosModelo{
    //print $sql;
    return $this->db->queryNoSelect($sql);
   }
-//creo funcion masvendidos
+
   public function getMasVendidos()
   {
     $sql = "SELECT * FROM productos WHERE masvendido='1' AND baja=0 LIMIT 8";
+    $data = $this->db->querySelect($sql);
+    return $data;
+  }
+//se crea funcion getNuevo
+  public function getNuevos()
+  {
+    $sql = "SELECT * FROM productos WHERE masvendido='0' ";
+    $sql.= "AND nuevos='1' AND baja=0 LIMIT 8";
     $data = $this->db->querySelect($sql);
     return $data;
   }

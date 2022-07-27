@@ -16,7 +16,7 @@ class AdmonProductos extends Controlador
     $sesion = new Sesion();
 
     if ($sesion->getLogin()) {
-      //Leemos los datos de la tabla
+      //Leemos los datos de la tabla 
       $data = $this->modelo->getProductos();
 
       //Leemos la llaves de tipoProducto
@@ -55,7 +55,7 @@ class AdmonProductos extends Controlador
     if ($_SERVER['REQUEST_METHOD']=="POST") {
       //Recibimos la información PHP7 isset()?valor1:valor2 => valor1 ?? valor2
       //si existe id es una modificación, si no existe es una alta
-      $id = $_POST['id'] ?? "";
+      $id = trim($_POST['id'] ?? "");
       //
       $tipo = $_POST['tipo'] ?? "";
       $nombre = Valida::cadena($_POST['nombre'] ?? "");
@@ -86,9 +86,10 @@ class AdmonProductos extends Controlador
       $autor = Valida::cadena($_POST['autor'] ?? "");
       $editorial = Valida::cadena($_POST['editorial'] ?? "");
       $pag = Valida::numero($_POST['pag'] ?? "");
+      if(empty($pag)) $pag = 0;
       //Cursos
       $publico = Valida::cadena($_POST['publico'] ?? "");
-      $objetivo = Valida::cadena($_POST['objetivos'] ?? "");
+      $objetivo = Valida::cadena($_POST['objetivo'] ?? "");
       $necesario = Valida::cadena($_POST['necesario'] ?? "");
 
       //Validamos la información
@@ -290,12 +291,17 @@ class AdmonProductos extends Controlador
     return $this->modelo->getMasVendidos();
   }
 
+  public function getNuevos()
+  {
+    return $this->modelo->getNuevos();
+  }
+
   public function producto($id='')
   {
     //Leemos los datos del registro del id
     $data = $this->modelo->getProductoId($id);
     //
-    //Llamamos a la vista del producto elegido
+    //Llamamos a la vista del producto
     //
     //Vista Alta
     $datos = [
