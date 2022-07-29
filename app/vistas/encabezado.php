@@ -10,7 +10,7 @@
 </head>
 <body>
   <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-    <a href="<?php print RUTA; ?>" class="navbar-brand">Tienda</a>
+    <a href="<?php print RUTA."tienda"; ?>" class="navbar-brand">Tienda</a><!-- //añade opcion de la ruta -->
     <div class="collapse navbar-collapse" id="menu">
     <?php if ($datos["menu"]) {
       print "<ul class='navbar-nav mr-auto mt-2 mt-lg-0'>";
@@ -41,7 +41,7 @@
       //
       print "<ul class='nav navbar-nav navbar-right'>";
       //
-      print "<li class='nav-item'>";//añadimos logout
+      print "<li class='nav-item'>";
       print "<a href='".RUTA."tienda/logout' class='nav-link'>Logout</a>";
       print "</li>";
       print "</ul>";

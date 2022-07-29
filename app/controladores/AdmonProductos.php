@@ -16,7 +16,7 @@ class AdmonProductos extends Controlador
     $sesion = new Sesion();
 
     if ($sesion->getLogin()) {
-      //Leemos los datos de la tabla 
+      //Leemos los datos de la tabla
       $data = $this->modelo->getProductos();
 
       //Leemos la llaves de tipoProducto
@@ -295,8 +295,8 @@ class AdmonProductos extends Controlador
   {
     return $this->modelo->getNuevos();
   }
-
-  public function producto($id='')
+//añado parametro
+  public function producto($id='',$regresa='')
   {
     //Leemos los datos del registro del id
     $data = $this->modelo->getProductoId($id);
@@ -309,6 +309,7 @@ class AdmonProductos extends Controlador
       "subtitulo" => $data["nombre"],
       "menu" => true,
       "admon" => false,
+      "regresa" => $regresa,
       "errores" => [],
       "data" => $data
     ];
