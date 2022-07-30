@@ -21,7 +21,7 @@
       print "<td class='text-left'>".$datos["tipoProducto"][$tipo]['cadena']."</td>";
       print "<td class='text-left'>".$datos["data"][$i]["nombre"]."</td>";
       print "<td class='text-left'>".substr(html_entity_decode($datos["data"][$i]["descripcion"]),0,60);
-      if (strlen($datos["data"][$i]["descripcion"])>60) { 
+      if (strlen($datos["data"][$i]["descripcion"])>60) {
         print "...";
       }
       print "</td>";
@@ -38,4 +38,6 @@
 </div><!--card-->
 <a href="<?php print RUTA; ?>admonProductos/alta" class="btn btn-success">
   Dar de alta un producto</a>
+   <br><br><br><br><br><br><br>
+       
 <?php include_once("piepagina.php"); ?>

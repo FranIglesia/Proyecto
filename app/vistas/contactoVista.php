@@ -1,4 +1,4 @@
-<?php include_once("encabezado.php"); //formulario contacto
+<?php include_once("encabezado.php"); 
 print "<h2 class='text-center'>Contacto</h2>";
 ?>
 <div class="card p-4 bg-light">
@@ -24,6 +24,8 @@ print "<h2 class='text-center'>Contacto</h2>";
   </div>
 </form>
 </div>
+<br><br><br><br><br><br><br>
+<br><br><br><br><br><br>
 <?php
 include_once("piepagina.php"); 
 ?>

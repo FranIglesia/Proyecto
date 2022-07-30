@@ -49,4 +49,6 @@
             }
           ?>
         </div><!--card-->
+         </div>
+         <br>
 <?php include_once("piepagina.php"); ?>

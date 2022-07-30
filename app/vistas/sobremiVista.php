@@ -1,5 +1,5 @@
 <?php include_once("encabezado.php"); 
-print "<h2 class='text-center'>Sobre mi</h2>"; 
+print "<h2 class='text-center'>Sobre mi</h2>";
 print "<div class='alert mt-3'>";
 print "<img src='img/fran.png' class='rounded float-right'/>";
 print "<p>Francisco José Iglesia Martín, persona dedicada a la implantación de novedades y actualizaciones de cursos de informática aplicada como a la de publicación independiente y de marketing que libera al genio creativo dentro de cada uno. La plataforma  facilita la compra a de libros impresos y electrónicos de calidad profesional, asi como poder aprender diferentes lenguajes de informática con los cursos impartidos por lo diferentes profesores.
@@ -16,6 +16,7 @@ print "<br>";
 print "<br>";
 print "</div>";
 print "<a href='".RUTA."tienda' class='btn btn-success'/>Regresar</a>";
-
+print "<br>";
+print "<br>";
 
 include_once("piepagina.php"); ?>

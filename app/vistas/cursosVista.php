@@ -15,12 +15,16 @@
               print $datos['data'][$i]["id"]."/cursos'>";
               print $datos['data'][$i]["nombre"]."</a></p>";
               print "</div>";
+              
               $ren++;
               if ($ren==4) {
                 $ren = 0;
-                print "</div>"; 
+                print "</div>";
               }
             }
           ?>
         </div><!--card-->
+         <br><br><br><br><br><br><br><br><br><br>
+         <br><br><br><br><br><br><br><br><br>
+
 <?php include_once("piepagina.php"); ?>
