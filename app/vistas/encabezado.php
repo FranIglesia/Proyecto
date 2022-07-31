@@ -13,7 +13,7 @@
     <a href="<?php print RUTA."tienda"; ?>" class="navbar-brand">Tienda</a>
     <div class="collapse navbar-collapse" id="menu">
 
-      <a href="<?php print RUTA."login"; ?>" class="navbar-brand">Login</a><!-- añadir login a tienda  -->
+      <a href="<?php print RUTA."login"; ?>" class="navbar-brand">Login</a><!-- añadir login a tienda --> 
  
 
 
@@ -43,12 +43,21 @@
       print "'>Contacto</a>";
       print "</li>";
       print "</ul>";
+        //
+      //Formulario lado derecho
       //
       print "<ul class='nav navbar-nav navbar-right'>";
+      //
       //
       print "<li class='nav-item'>";
       print "<a href='".RUTA."tienda/logout' class='nav-link'>Logout</a>";
       print "</li>";
+      ?>
+      <form action="<?php print RUTA; ?>buscar/producto" class="form-inline"  method="POST">Buscar:
+        <input type="text" name="buscar" id="buscar" class="form-control" size="20" placeholder="Buscar un producto">
+        <button type="submit" class="btn btn-light">ir</button>
+      </form>
+      <?php
       print "</ul>";
     }
     if(isset($datos["admon"])){
