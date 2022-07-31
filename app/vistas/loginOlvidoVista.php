@@ -13,4 +13,6 @@
   </form>
   <p>Se te enviará un correo, favor de verificar tu bandeja de spam.</p>
 </div><!--card-->
+<br><br><br><br><br><br><br><br><br> 
+<br><br><br><br><br><br><br><br><br><br>
 <?php include_once("piepagina.php"); ?> 

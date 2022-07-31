@@ -12,6 +12,11 @@
   <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <a href="<?php print RUTA."tienda"; ?>" class="navbar-brand">Tienda</a>
     <div class="collapse navbar-collapse" id="menu">
+
+      <a href="<?php print RUTA."login"; ?>" class="navbar-brand">Login</a><!-- añadir login a tienda  -->
+ 
+
+
     <?php if ($datos["menu"]) {
       print "<ul class='navbar-nav mr-auto mt-2 mt-lg-0'>";
       print "<li class='nav-item'>";

@@ -38,6 +38,6 @@
 </div><!--card-->
 <a href="<?php print RUTA; ?>admonProductos/alta" class="btn btn-success">
   Dar de alta un producto</a>
-   <br><br><br><br><br><br><br>
+   <br><br>
        
 <?php include_once("piepagina.php"); ?>

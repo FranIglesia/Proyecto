@@ -32,7 +32,20 @@ if($datos["data"]["tipo"]==1){
 
   print "<h4>Resumen:</h4>";
   print "<p>".html_entity_decode($datos["data"]["descripcion"])."</p>";
-}//añado datos del regreso
+}
 $regresa = ($datos["regresa"]=="")? "tienda" : $datos["regresa"];
 print "<a href='".RUTA.$regresa."' class='btn btn-success'/>Regresa</a>";
+print "<br>";
+print "<br>";
+print "<br>";
+print "<br>";
+print "<br>"; 
+print "<br>";
+print "<br>";
+print "<br>";
+print "<br>";
+print "<br>";
+print "<br>";
+print "<br>";
+
 include_once("piepagina.php"); ?>
