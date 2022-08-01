@@ -11,32 +11,44 @@ class Buscar extends Controlador{
   }
 
   function caratula(){
-    $sesion = new Sesion();
-    if ($sesion->getLogin()) {
-      //
-      //Leer los productos mas vendidos
-      //
-      $data = $this->getMasVendidos();
-      //
-      //Leer los productos nuevos 
-      //
-      $nuevos = $this->getNuevos();
-      //
-      $datos = [
-        "titulo" => "Bienvenid@ a nuestra tienda",
-        "data" => $data,
-        "nuevos" => $nuevos,
-        "menu" => true
-      ];
-      $this->vista("tiendaVista",$datos);
-    } else {
-      header("location:".RUTA);
-    }
+    
   }
 
   public function producto()
   {
-    print $_POST["buscar"];
+    $buscar = $_POST["buscar"]??"";
+    if (!empty($buscar)) {
+      //
+      //Leer los productos mas vendidos 
+      //
+      $data = $this->modelo->getProductosBuscar($buscar);
+      //
+      if(count($data)==0){
+        $datos = [
+          "titulo" => "No hay ningún artículo",
+          "menu" => true,
+          "errores" => [],
+          "data" => [],
+          "subtitulo" => "No hay artículos",
+          "texto" => "No hay artículos con el criterio '".$buscar."'.",
+          "color" => "alert-danger",
+          "url" => "tienda",
+          "colorBoton" => "btn-danger",
+          "textoBoton" => "Regresar"
+          ];
+          $this->vista("mensajeVista",$datos);
+      } else {
+        $datos = [
+        "titulo" => "Productos buscados",
+        "data" => $data,
+        "menu" => true
+          ];
+        $this->vista("buscarVista",$datos);
+      } 
+    } else {
+      header("location:".RUTA);
+   }
+      
   }
 }
 ?>
