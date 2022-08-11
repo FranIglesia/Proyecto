@@ -295,13 +295,15 @@ class AdmonProductos extends Controlador
   {
     return $this->modelo->getNuevos();
   }
-//añado parametro
+
   public function producto($id='',$regresa='')
   {
     //Leemos los datos del registro del id
     $data = $this->modelo->getProductoId($id);
     //
-    //Llamamos a la vista del producto
+    //Enviamos el id del usuario 
+    $sesion = new Sesion();
+    $idUsuario = $_SESSION["usuario"]["id"];
     //
     //Vista Alta
     $datos = [
@@ -310,6 +312,7 @@ class AdmonProductos extends Controlador
       "menu" => true,
       "admon" => false,
       "regresa" => $regresa,
+      "idUsuario" => $idUsuario,
       "errores" => [],
       "data" => $data
     ];
