@@ -9,7 +9,7 @@ class CarritoModelo{
   {
     $this->db = new MySQLdb();
   }
-//se crea metodos de verifica y agregar producto
+
   public function verificaProducto($idProducto, $idUsuario)
   {
     $sql = "SELECT * FROM carrito WHERE idUsuario=".$idUsuario." ";
@@ -33,10 +33,34 @@ class CarritoModelo{
     $sql.= "fecha=(NOW())";
     //
     return $this->db->queryNoSelect($sql);
+  }
 
+  public function getCarrito($idUsuario)
+  {
+    $sql = "SELECT c.idUsuario as usuario, ";
+    $sql.= "c.idProducto as producto, ";
+    $sql.= "c.cantidad as cantidad, ";
+    $sql.= "c.envio as envio, ";
+    $sql.= "c.descuento as descuento, ";
+    $sql.= "p.precio as precio, ";
+    $sql.= "p.imagen as imagen, ";
+    $sql.= "p.descripcion as descripcion, ";
+    $sql.= "p.nombre as nombre ";
+    $sql.= "FROM carrito as c, productos as p ";
+    $sql.= "WHERE idUsuario='".$idUsuario."' AND ";
+    $sql.= "estado=0 AND ";
+    $sql.= "c.idProducto=p.id";
+    //
+    return $this->db->querySelect($sql);
+  }
 
-
-    return count($r);
+  public function actualiza($idUsuario, $idProducto, $cantidad) 
+  {
+    $sql = "UPDATE carrito ";
+    $sql.= "SET cantidad=".$cantidad." ";
+    $sql.= "WHERE idUsuario=".$idUsuario." AND ";
+    $sql.= "idProducto=".$idProducto;
+    return $this->db->queryNoSelect($sql);
   }
 }
 ?>

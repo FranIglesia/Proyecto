@@ -1,6 +1,6 @@
 <?php include_once("encabezado.php");
 //
-//Variables
+//Variables de trabajo
 //
 $verifica = false;
 $subtotal = 0;
@@ -35,7 +35,7 @@ for ($i=0; $i < count($datos["data"]); $i++) {
   $tot = $can*$pre;
   //
   print "<tr>";
-  print "<td><img src='".RUTA."' width='105' alt'".$nom."'></td>";
+  print "<td><img src='".RUTA."img/".$img."' width='105' alt'".$nom."'></td>";
   print "<td>".$desc."..</td>";
   print "<td class='text-right'>";
   print "<input type='number' name='c".$i."' class='text-right' ";
@@ -57,7 +57,7 @@ for ($i=0; $i < count($datos["data"]); $i++) {
 }
 $total = $subtotal + $envio - $descuento;
 print "<input type='hidden' name='num' value='".$i."'/>";
-print "<input type='hidden' name='idUsuario' value='".$idUsuario."'/>";
+print "<input type='hidden' name='idUsuario' value='".$datos["idUsuario"]."'/>";
 print "</table>";
 print "<hr>";
 //
@@ -99,4 +99,4 @@ if($verifica){
 print "</tr>";
 print "</table>";
 print "</form>";
-include_once("piepagina.php"); ?>
+include_once("piepagina.php"); ?> 
