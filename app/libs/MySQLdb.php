@@ -6,7 +6,7 @@ class MySQLdb{
   private $host = "localhost";
   private $usuario = "root";
   private $clave = ""; //XAMPP la clave es vacía
-  private $db = "proyecto";
+  private $db = "proy";
   private $puerto = ""; 
   private $conn;
   
@@ -61,6 +61,11 @@ class MySQLdb{
   function queryNoSelect($sql){
     $r = mysqli_query($this->conn, $sql);
     return $r;
+  }
+
+   public function cerrar() 
+  {
+    mysqli_close($this->conn);
   }
 }
 ?>

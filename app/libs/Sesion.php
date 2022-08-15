@@ -12,6 +12,12 @@ class Sesion{
     if (isset($_SESSION["usuario"])) {
       $this->usuario = $_SESSION["usuario"];
       $this->login = true;
+      //
+      //Calculo del total del carrito
+      // 
+      $idUsuario = $_SESSION["usuario"]["id"];
+      $_SESSION["carrito"] = $this->totalCarrito($idUsuario)??0;
+      //
     } else {
       unset($this->usuario);
       $this->login = false;
@@ -24,7 +30,7 @@ class Sesion{
       $this->login = true;
     }
   }
-//sesion logout
+
   public function finalizarLogin(){
     unset($_SESSION["usuario"]);
     unset($this->usuario);
@@ -38,6 +44,20 @@ class Sesion{
 
   public function getUsuario(){
     return $this->usuario;
+  }
+
+  public function totalCarrito($idUsuario)
+  {
+    $db = new MySQLdb();
+    $sql = "SELECT SUM(p.precio * c.cantidad) - ";
+    $sql.= "SUM(c.descuento) + SUM(c.envio) as tot ";
+    $sql.= "FROM carrito as c, productos as p ";
+    $sql.= "WHERE c.idUsuario = ".$idUsuario." AND ";
+    $sql.= "c.idProducto=p.id AND c.estado=0";
+    $data = $db->query($sql);
+    $tot = $data["tot"]??0;
+    $db->cerrar();
+    return $tot;
   }
 }
 
