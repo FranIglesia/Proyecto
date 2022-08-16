@@ -6,7 +6,7 @@ $verifica = false;
 $subtotal = 0;
 $envio = 0;
 $descuento = 0;
-$idUsuarrio = $datos["idUsuario"];
+$idUsuario = $datos["idUsuario"];
 //
 print "<h2 class='text-center'>Carrito de compras</h2>";
 print "<form action='".RUTA."carrito/actualiza' method='POST'>";
@@ -42,11 +42,11 @@ for ($i=0; $i < count($datos["data"]); $i++) {
   print "value='".number_format($can,0)."' min='1' max='99'/>";
   print "<input type='hidden' name='i".$i."' value='".$num."'/>";
   print "</td>";
-  print "<td class='text-right'>$".number_format($pre,2)."</td>";
-  print "<td class='text-right'>$".number_format($tot,2)."</td>";
+  print "<td class='text-right'>€".number_format($pre,2)."</td>";
+  print "<td class='text-right'>€".number_format($tot,2)."</td>";
   print "<td>&nbsp;</td>";
   print "<td class='text-right'><a href='".RUTA."carrito/borrar/";
-  print $num."/".$idUsuario."' class='btn btn-danger'>Borrar</a>";
+  print $num."/".$idUsuario."' class='btn btn-danger'>Borrar</a>"; 
   print "</tr>";
   //
   //Subtotales
@@ -67,25 +67,25 @@ print "<table width='100%' class='text-right'>";
 print "<tr>";
 print "<td width='79.85%'></td>";
 print "<td width='11.55%'>Subtotal:</td>";
-print "<td width='9.20%'>$".number_format($subtotal,2)."</td>";
+print "<td width='9.20%'>€".number_format($subtotal,2)."</td>";
 print "</tr>";
 
 print "<tr>";
 print "<td width='79.85%'></td>";
 print "<td width='11.55%'>Descuento:</td>";
-print "<td width='9.20%'>$".number_format($descuento,2)."</td>";
+print "<td width='9.20%'>€".number_format($descuento,2)."</td>";
 print "</tr>";
 
 print "<tr>";
 print "<td width='79.85%'></td>";
 print "<td width='11.55%'>Envío:</td>";
-print "<td width='9.20%'>$".number_format($envio,2)."</td>";
+print "<td width='9.20%'>€".number_format($envio,2)."</td>";
 print "</tr>";
 
 print "<tr>";
 print "<td width='79.85%'></td>";
 print "<td width='11.55%'>Total:</td>";
-print "<td width='9.20%'>$".number_format($total,2)."</td>";
+print "<td width='9.20%'>€".number_format($total,2)."</td>";
 print "</tr>";
 
 print "<tr>";
@@ -99,4 +99,7 @@ if($verifica){
 print "</tr>";
 print "</table>";
 print "</form>";
-include_once("piepagina.php"); ?> 
+print "<br>";
+print "<br>";
+print "<br>";
+include_once("piepagina.php"); ?>
