@@ -64,14 +64,29 @@ class Carrito extends Controlador{
       $this->caratula($errores);
     }
   }
-    
-  public function borrar($idProducto, $idUsuario) 
+  
+  public function borrar($idProducto, $idUsuario)
   {
     $errores = array();
     if (!$this->modelo->borrar($idProducto, $idUsuario)) {
       array_push($errores, "Error al borrar el registro del carrito");
     }
     $this->caratula($errores);
+  }
+
+  public function checkout() 
+  {
+    $sesion = new Sesion();
+    if (!$sesion->getLogin()) {
+      # code...
+    } else {
+      $datos=[
+        "titulo" => "Carrito | Checkout",
+        "menu" => true
+      ];
+      $this->vista("checkoutVista",$datos);
+    }
+    
   }
 }
 ?>

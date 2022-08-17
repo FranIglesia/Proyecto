@@ -46,7 +46,7 @@ for ($i=0; $i < count($datos["data"]); $i++) {
   print "<td class='text-right'>€".number_format($tot,2)."</td>";
   print "<td>&nbsp;</td>";
   print "<td class='text-right'><a href='".RUTA."carrito/borrar/";
-  print $num."/".$idUsuario."' class='btn btn-danger'>Borrar</a>"; 
+  print $num."/".$idUsuario."' class='btn btn-danger'>Borrar</a>";
   print "</tr>";
   //
   //Subtotales
@@ -92,14 +92,14 @@ print "<tr>";
 print "<td><a href='".RUTA."tienda' class='btn btn-info' role='button'>Seguir comprando</a></td>";
 print "<td><input type='submit' class='btn btn-info' role='button' value='Recalcular'/></td>";
 if($verifica){
-  print "<td><a href='".RUTA."gracias' class='btn btn-success' role='button'>Pagar comprando</a></td>";
+  print "<td><a href='".RUTA."carrito/gracias' class='btn btn-success' role='button'>Pagar</a></td>";
 } else {
-  print "<td><a href='".RUTA."checkout' class='btn btn-success' role='button'>Pagar comprando</a></td>";
+  print "<td><a href='".RUTA."carrito/checkout' class='btn btn-success' role='button'>Pagar</a></td>";
 }
 print "</tr>";
 print "</table>";
 print "</form>";
-print "<br>";
-print "<br>";
-print "<br>";
+print "<br>"; 
+
+
 include_once("piepagina.php"); ?>
