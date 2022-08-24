@@ -74,11 +74,19 @@ class Carrito extends Controlador{
     $this->caratula($errores);
   }
 
-  public function checkout() 
+  public function checkout()
   {
     $sesion = new Sesion();
-    if (!$sesion->getLogin()) {
-      # code...
+    if ($sesion->getLogin()) {
+      //
+      $data = $_SESSION["usuario"];
+      //
+      $datos=[
+        "titulo" => "Carrito | Datos de envío",
+        "data" => $data,
+        "menu" => true
+      ];
+      $this->vista("datosEnvioVista",$datos);
     } else {
       $datos=[
         "titulo" => "Carrito | Checkout",
@@ -86,7 +94,21 @@ class Carrito extends Controlador{
       ];
       $this->vista("checkoutVista",$datos);
     }
-    
+  }
+
+  public function formaPago($value='') 
+  {
+    $datos=[
+        "titulo" => "Carrito | Forma de pago",
+        "menu" => true
+      ];
+      $this->vista("formaPagoVista",$datos);
+  }
+
+  public function verificar()
+  {
+    print "verificar";
+    var_dump($_POST);
   }
 }
 ?>
