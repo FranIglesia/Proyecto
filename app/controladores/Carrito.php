@@ -14,7 +14,7 @@ class Carrito extends Controlador{
     $sesion = new Sesion();
     if ($sesion->getLogin()) {
       //
-      //Recuperamos el id del usuario
+      //Recuperamos el id del usuario 
       //
       $idUsuario = $_SESSION["usuario"]["id"];
       //
@@ -96,7 +96,7 @@ class Carrito extends Controlador{
     }
   }
 
-  public function formaPago($value='') 
+  public function formaPago($value='')
   {
     $datos=[
         "titulo" => "Carrito | Forma de pago",
@@ -107,8 +107,26 @@ class Carrito extends Controlador{
 
   public function verificar()
   {
-    print "verificar";
-    var_dump($_POST);
+   $sesion = new Sesion();
+    //
+    //Recuperamos el id del usuario
+    //
+    $idUsuario = $_SESSION["usuario"]["id"];
+    //
+    //Leer los productos del carrito
+    //
+    $carrito = $this->modelo->getCarrito($idUsuario);
+    //
+    $pago = $_POST["pago"]??"";
+    $data = $_SESSION["usuario"];
+    $datos=[
+      "titulo" => "Carrito | Verificar datos",
+      "pago" => $pago,
+      "data" => $data,
+      "carrito" => $carrito,
+      "menu" => true
+    ];
+    $this->vista("verificaVista",$datos);
   }
 }
 ?>
