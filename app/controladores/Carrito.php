@@ -14,7 +14,7 @@ class Carrito extends Controlador{
     $sesion = new Sesion();
     if ($sesion->getLogin()) {
       //
-      //Recuperamos el id del usuario 
+      //Recuperamos el id del usuario
       //
       $idUsuario = $_SESSION["usuario"]["id"];
       //
@@ -127,6 +127,37 @@ class Carrito extends Controlador{
       "menu" => true
     ];
     $this->vista("verificaVista",$datos);
+  }
+//creado funcion gracias
+  public function gracias()
+  {
+    $sesion = new Sesion();
+    $data = $_SESSION["usuario"];
+    $idUsuario = $_SESSION["usuario"]["id"];
+    //
+    if($carrito = $this->modelo->cierraCarrito($idUsuario,1)){
+      //
+      $datos=[
+        "titulo" => "Carrito | Gracias por su compra",
+        "data" => $data,
+        "menu" => true
+      ];
+      $this->vista("graciasVista",$datos);
+    } else {
+      $datos = [
+      "titulo" => "Error la actualización del carrito",
+      "menu" => true,
+      "errores" => [],
+      "data" => [],
+      "subtitulo" => "Error la actualización del carrito",
+      "texto" => "Existió un problema al actualizar el estado del carrito. Prueba por favor más tarde o comuníquese a nuestro servicio de soporte técnico.",
+      "color" => "alert-danger",
+      "url" => "tienda",
+      "colorBoton" => "btn-danger",
+      "textoBoton" => "Regresar"
+      ];
+      $this->vista("mensajeVista",$datos);
+    }
   }
 }
 ?>
